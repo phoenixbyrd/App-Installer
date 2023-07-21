@@ -1,27 +1,7 @@
 #!/bin/bash
 
-# Function to update the script from GitHub
-update_script() {
-    # Store the current commit hash of the script in a file
-    current_commit=$(git rev-parse HEAD)
-    echo "$current_commit" > "$script_dir/commit_hash"
-
-    # Fetch the latest changes from the remote repository
-    git fetch origin master
-
-    # Get the latest commit hash from the remote repository
-    latest_commit=$(git rev-parse origin/master)
-
-    # Compare the commit hashes
-    if [ "$current_commit" != "$latest_commit" ]; then
-        # Reset the script to the latest version in the repository
-        git reset --hard origin/master
-        chmod +x "$0"
-    fi
-}
-
-# Call the update function to update the script before execution
-update_script
+#Grab Updates
+git pull
 
 varname=$(basename $HOME/../usr/var/lib/proot-distro/installed-rootfs/debian/home/*)
 
