@@ -177,7 +177,7 @@ while true; do
         freetube_description="A privacy-focused YouTube client"
     else
         freetube_action="Install FreeTube (Status: Not Installed)"
-        freetube_description="A privacy-focused YouTube client test"
+        freetube_description="A privacy-focused YouTube client"
     fi
 
     if [ "$tor_browser_status" == "Installed" ]; then
