@@ -1,8 +1,5 @@
 #!/bin/bash
 
-#Grab Updates
-git reset --hard
-
 varname=$(basename $HOME/../usr/var/lib/proot-distro/installed-rootfs/debian/home/*)
 
 # Get the absolute path for the script's directory
