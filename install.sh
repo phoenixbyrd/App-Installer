@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #Grab Updates
-git pull
+git reset --hard
 
 varname=$(basename $HOME/../usr/var/lib/proot-distro/installed-rootfs/debian/home/*)
 
