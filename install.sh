@@ -1,4 +1,6 @@
 #!/bin/bash
+
+git pull
 chmod +x *
 
 varname=$(basename $HOME/../usr/var/lib/proot-distro/installed-rootfs/debian/home/*)
