@@ -3,4 +3,4 @@
 git reset --hard HEAD
 git pull
 chmod +x *
-./install
+./install.sh
