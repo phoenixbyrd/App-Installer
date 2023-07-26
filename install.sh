@@ -19,6 +19,7 @@ brave_desktop="$HOME/../usr/share/applications/brave.desktop"
 obsidian_desktop="$HOME/../usr/share/applications/obsidian.desktop"
 libreoffice_desktop="$HOME/../usr/share/applications/libreoffice-base.desktop"
 code_desktop="$HOME/../usr/share/applications/code.desktop"
+vlc_desktop="$HOME/../usr/share/applications/vlc.desktop"
 
 check_freetube_installed() {
     if [ -e "$freetube_desktop" ]; then
@@ -84,6 +85,14 @@ check_code_installed() {
     fi
 }
 
+check_vlc_installed() {
+    if [ -e "$vlc_desktop" ]; then
+        echo "Installed"
+    else
+        echo "Not Installed"
+    fi
+}
+
 install_freetube() {
     "$script_dir/install_freetube.sh"
     zenity --info --title="Installation Complete" --text="FreeTube has been installed successfully."
@@ -122,6 +131,11 @@ install_libreoffice() {
 install_code() {
     "$script_dir/install_vscode.sh"
     zenity --info --title="Installation Complete" --text="Visual Studio has been installed successfully."
+}
+
+install_vlc() {
+    "$script_dir/install_vlc.sh"
+    zenity --info --title="Installation Complete" --text="VLC has been installed successfully."
 }
 
 
@@ -216,6 +230,17 @@ remove_code() {
     fi
 }
 
+remove_vlc() {
+    if [ -e "$vlc_desktop" ]; then
+        proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 sudo apt remove vlc -y
+        proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 sudo apt autoremove -y
+        rm "$vlc_desktop"
+        zenity --info --title="Removal Complete" --text="VLC has been removed successfully."
+    else
+        zenity --error --title="Removal Error" --text="VLC is not installed."
+    fi
+}
+
 while true; do
     # Determine the installation status of each app
     freetube_status=$(check_freetube_installed)
@@ -226,6 +251,7 @@ while true; do
     obsidian_status=$(check_obsidian_installed)
     libreoffice_status=$(check_libreoffice_installed)
     code_status=$(check_code_installed)
+    vlc_status=$(check_vlc_installed)
 
     # Define the actions based on the installation status
     if [ "$freetube_status" == "Installed" ]; then
@@ -292,6 +318,14 @@ while true; do
         code_description="Code Editing. Redefined."
     fi
 
+    if [ "$vlc_status" == "Installed" ]; then
+        vlc_action="Remove VLC (Status: Installed)"
+        vlc_description="A free and open source cross-platform multimedia player "
+    else
+        vlc_action="Install VLC (Status: Not Installed)"
+        vlc_description="A free and open source cross-platform multimedia player "
+    fi
+
     # Set the dark GTK theme
     export GTK_THEME=Adwaita:dark
 
@@ -308,6 +342,7 @@ while true; do
         FALSE "$obsidian_action" "$obsidian_description" \
         FALSE "$libreoffice_action" "$libreoffice_description" \
         FALSE "$code_action" "$code_description" \
+        FALSE "$vlc_action" "$vlc_description" \
         --width=650 --height=400)
 
     # Check if the user canceled the selection
@@ -372,7 +407,14 @@ while true; do
             else
                 install_code
             fi
-            ;;            
+            ;;     
+        "$vlc_action")
+            if [ "$vlc_status" == "Installed" ]; then
+                remove_vlc
+            else
+                install_vlc
+            fi
+            ;;        
         *)
             zenity --error --title="Error" --text="Invalid choice."
             ;;
