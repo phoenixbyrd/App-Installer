@@ -2,13 +2,9 @@
 
 varname=$(basename $HOME/../usr/var/lib/proot-distro/installed-rootfs/debian/home/*)
 
-#Install Brave Web Browser
-
 proot-distro login debian --shared-tmp -- env DISPLAY=:1.0 sudo curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg
 proot-distro login debian --shared-tmp -- env DISPLAY=:1.0 echo "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg] https://brave-browser-apt-release.s3.brave.com/ stable main"|proot-distro login debian --shared-tmp -- env DISPLAY=:1.0 sudo tee /etc/apt/sources.list.d/brave-browser-release.list
 proot-distro login debian --shared-tmp -- env DISPLAY=:1.0 sudo apt update && proot-distro login debian --shared-tmp -- env DISPLAY=:1.0 sudo apt install brave-browser -y
-
-#Create Desktop Launcher
 
 echo "[Desktop Entry]
 Version=1.0

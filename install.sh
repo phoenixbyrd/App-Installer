@@ -1,5 +1,28 @@
 #!/bin/bash
 
+# Function to update the script from GitHub
+update_script() {
+    # Store the current commit hash of the script in a file
+    current_commit=$(git rev-parse HEAD)
+    echo "$current_commit" > "$script_dir/commit_hash"
+
+    # Fetch the latest changes from the remote repository
+    git fetch origin master
+
+    # Get the latest commit hash from the remote repository
+    latest_commit=$(git rev-parse origin/master)
+
+    # Compare the commit hashes
+    if [ "$current_commit" != "$latest_commit" ]; then
+        # Reset the script to the latest version in the repository
+        git reset --hard origin/master
+        chmod +x "$0"
+    fi
+}
+
+# Call the update function to update the script before execution
+update_script
+
 varname=$(basename $HOME/../usr/var/lib/proot-distro/installed-rootfs/debian/home/*)
 
 # Get the absolute path for the script's directory
@@ -13,6 +36,8 @@ webcord_desktop="$HOME/../usr/share/applications/webcord.desktop"
 vivaldi_desktop="$HOME/../usr/share/applications/vivaldi.desktop"
 brave_desktop="$HOME/../usr/share/applications/brave.desktop"
 obsidian_desktop="$HOME/../usr/share/applications/obsidian.desktop"
+libreoffice_desktop="$HOME/../usr/share/applications/libreoffice-base.desktop"
+code_desktop="$HOME/../usr/share/applications/code.desktop"
 
 check_freetube_installed() {
     if [ -e "$freetube_desktop" ]; then
@@ -62,6 +87,22 @@ check_obsidian_installed() {
     fi
 }
 
+check_libreoffice_installed() {
+    if [ -e "$libreoffice_desktop" ]; then
+        echo "Installed"
+    else
+        echo "Not Installed"
+    fi
+}
+
+check_code_installed() {
+    if [ -e "$code_desktop" ]; then
+        echo "Installed"
+    else
+        echo "Not Installed"
+    fi
+}
+
 install_freetube() {
     "$script_dir/install_freetube.sh"
     zenity --info --title="Installation Complete" --text="FreeTube has been installed successfully."
@@ -91,6 +132,17 @@ install_obsidian() {
     "$script_dir/install_obsidian.sh"
     zenity --info --title="Installation Complete" --text="Obsidian has been installed successfully."
 }
+
+install_libreoffice() {
+    "$script_dir/install_libreoffice.sh"
+    zenity --info --title="Installation Complete" --text="Libreoffice has been installed successfully."
+}
+
+install_code() {
+    "$script_dir/install_vscode.sh"
+    zenity --info --title="Installation Complete" --text="Visual Studio has been installed successfully."
+}
+
 
 remove_freetube() {
     if [ -e "$freetube_desktop" ]; then
@@ -159,6 +211,30 @@ remove_obsidian() {
     fi
 }
 
+remove_libreoffice() {
+    if [ -e "$libreoffice_desktop" ]; then
+        proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 sudo apt remove libreoffice -y
+        proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 sudo apt autoremove -y
+        rm "$HOME/../usr/share/applications/libreoffice*"
+        rm "$libreoffice_desktop"
+        zenity --info --title="Removal Complete" --text="Libreoffice has been removed successfully."
+    else
+        zenity --error --title="Removal Error" --text="Libreoffice is not installed."
+    fi
+}
+
+remove_code() {
+    if [ -e "$code_desktop" ]; then
+        proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 sudo apt remove code -y
+        proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 sudo apt autoremove -y
+        rm "$HOME/../usr/share/applications/code.desktop"
+        rm "$libreoffice_desktop"
+        zenity --info --title="Removal Complete" --text="VS Code has been removed successfully."
+    else
+        zenity --error --title="Removal Error" --text="VS Code is not installed."
+    fi
+}
+
 while true; do
     # Determine the installation status of each app
     freetube_status=$(check_freetube_installed)
@@ -167,6 +243,8 @@ while true; do
     vivaldi_status=$(check_vivaldi_installed)
     brave_status=$(check_brave_installed)
     obsidian_status=$(check_obsidian_installed)
+    libreoffice_status=$(check_libreoffice_installed)
+    code_status=$(check_code_installed)
 
     # Define the actions based on the installation status
     if [ "$freetube_status" == "Installed" ]; then
@@ -217,6 +295,22 @@ while true; do
         obsidian_description="A private and flexible note‑taking app"
     fi
 
+    if [ "$libreoffice_status" == "Installed" ]; then
+        libreoffice_action="Remove Libreoffice (Status: Installed)"
+        libreoffice_description="A free and open-source office productivity software suite"
+    else
+        libreoffice_action="Install Libreoffice (Status: Not Installed)"
+        libreoffice_description="A free and open-source office productivity software suite"
+    fi
+
+    if [ "$code_status" == "Installed" ]; then
+        code_action="Remove VS Code (Status: Installed)"
+        code_description="Code Editing. Redefined."
+    else
+        code_action="Install VS Code (Status: Not Installed)"
+        code_description="Code Editing. Redefined."
+    fi
+
     # Set the dark GTK theme
     export GTK_THEME=Adwaita:dark
 
@@ -231,6 +325,8 @@ while true; do
         FALSE "$vivaldi_action" "$vivaldi_description" \
         FALSE "$brave_action" "$brave_description" \
         FALSE "$obsidian_action" "$obsidian_description" \
+        FALSE "$libreoffice_action" "$libreoffice_description" \
+        FALSE "$code_action" "$code_description" \
         --width=650 --height=400)
 
     # Check if the user canceled the selection
@@ -280,6 +376,20 @@ while true; do
                 remove_obsidian
             else
                 install_obsidian
+            fi
+            ;;    
+        "$libreoffice_action")
+            if [ "$libreoffice_status" == "Installed" ]; then
+                remove_libreoffice
+            else
+                install_libreoffice
+            fi
+            ;;     
+        "$code_action")
+            if [ "$code_status" == "Installed" ]; then
+                remove_code
+            else
+                install_code
             fi
             ;;            
         *)
