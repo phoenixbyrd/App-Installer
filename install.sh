@@ -339,7 +339,7 @@ while true; do
         FALSE "$libreoffice_action" "$libreoffice_description" \
         FALSE "$code_action" "$code_description" \
         FALSE "$vlc_action" "$vlc_description" \
-        --width=725 --height=400)
+        --width=750 --height=400)
 
     # Check if the user canceled the selection
     if [ -z "$choice" ]; then
