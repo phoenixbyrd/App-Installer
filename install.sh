@@ -1,5 +1,27 @@
 #!/bin/bash
 
+# Function to refresh the script with the changes made
+refresh_script() {
+    # Write the updated content to a temporary file
+    tmp_script=$(mktemp)
+    cat > "$tmp_script" << "EOF"
+
+    
+EOF
+    echo "git reset --hard HEAD" >> "$tmp_script"
+    echo "git pull" >> "$tmp_script"
+    echo "chmod +x *" >> "$tmp_script"
+
+    # Make the temporary script executable
+    chmod +x "$tmp_script"
+
+    # Execute the temporary script, effectively refreshing the script with the changes made
+    exec "$tmp_script"
+}
+
+# Call the function to refresh the script
+refresh_script
+
 varname=$(basename $HOME/../usr/var/lib/proot-distro/installed-rootfs/debian/home/*)
 
 # Get the absolute path for the script's directory
