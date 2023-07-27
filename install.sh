@@ -252,10 +252,10 @@ while true; do
     # Define the actions based on the installation status
     if [ "$freetube_status" == "Installed" ]; then
         freetube_action="Remove FreeTube (Status: Installed)"
-        freetube_description="A privacy-focused YouTube client test"
+        freetube_description="A privacy-focused YouTube client"
     else
         freetube_action="Install FreeTube (Status: Not Installed)"
-        freetube_description="A privacy-focused YouTube client"
+        freetube_description="A privacy-focused YouTube client test"
     fi
 
     if [ "$tor_browser_status" == "Installed" ]; then
