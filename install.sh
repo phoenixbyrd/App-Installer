@@ -308,10 +308,10 @@ while true; do
     fi
 
     if [ "$code_status" == "Installed" ]; then
-        code_action="Remove VS Code (Status: Installed)"
+        code_action="Remove Visual Studio Code (Status: Installed)"
         code_description="Code Editing. Redefined."
     else
-        code_action="Install VS Code (Status: Not Installed)"
+        code_action="Install Visual Studio Code (Status: Not Installed)"
         code_description="Code Editing. Redefined."
     fi
 
