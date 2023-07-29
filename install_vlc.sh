@@ -4,5 +4,19 @@ varname=$(basename $HOME/../usr/var/lib/proot-distro/installed-rootfs/debian/hom
 proot-distro login debian --shared-tmp -- env DISPLAY=:1.0 apt update
 proot-distro login debian --shared-tmp -- env DISPLAY=:1.0 sudo apt install vlc -y
 
-cp $HOME/../usr/var/lib/proot-distro/installed-rootfs/debian/usr/share/applications/vlc.desktop $HOME/../usr/share/applications
-sed -i "s/^Exec=\(.*\)$/Exec=proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 \1/"   $HOME/../usr/share/applications/vlc.desktop
+echo "[Desktop Entry]
+Version=1.0
+Type=Application
+Name=VLC media player
+Comment=Read, capture, broadcast your multimedia streams
+Exec=proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 /usr/bin/vlc --started-from-file %U
+Icon=vlc
+Categories=Video;
+Path=
+Terminal=false
+StartupNotify=false
+
+" > ~/Desktop/vlc.desktop
+
+chmod +x $HOME/Desktop/vlc.desktop
+cp $HOME/Desktop/vlc.desktop $HOME/../usr/share/applications/vlc.desktop 
