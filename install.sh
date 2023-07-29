@@ -219,7 +219,8 @@ remove_code() {
         proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 sudo apt remove code -y
         proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 sudo apt autoremove -y
         rm "$HOME/../usr/share/applications/code.desktop"
-        rm "$libreoffice_desktop"
+        rm "$HOME/Desktop/code.desktop"
+        rm "$code_desktop"
         zenity --info --title="Removal Complete" --text="VS Code has been removed successfully."
     else
         zenity --error --title="Removal Error" --text="VS Code is not installed."
