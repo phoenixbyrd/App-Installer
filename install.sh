@@ -16,6 +16,7 @@ obsidian_desktop="$HOME/../usr/share/applications/obsidian.desktop"
 libreoffice_desktop="$HOME/../usr/share/applications/libreoffice-base.desktop"
 code_desktop="$HOME/../usr/share/applications/code.desktop"
 vlc_desktop="$HOME/../usr/share/applications/vlc.desktop"
+notion_desktop="$HOME/../usr/share/applications/notion.desktop"
 
 check_freetube_installed() {
     if [ -e "$freetube_desktop" ]; then
@@ -89,6 +90,14 @@ check_vlc_installed() {
     fi
 }
 
+check_notion_installed() {
+    if [ -e "$notion_desktop" ]; then
+        echo "Installed"
+    else
+        echo "Not Installed"
+    fi
+}
+
 install_freetube() {
     "$script_dir/install_freetube.sh"
     zenity --info --title="Installation Complete" --text="FreeTube has been installed successfully."
@@ -132,6 +141,11 @@ install_code() {
 install_vlc() {
     "$script_dir/install_vlc.sh"
     zenity --info --title="Installation Complete" --text="VLC has been installed successfully."
+}
+
+install_notion() {
+    "$script_dir/install_notion.sh"
+    zenity --info --title="Installation Complete" --text="Notion has been installed successfully."
 }
 
 
@@ -193,7 +207,7 @@ remove_brave() {
 
 remove_obsidian() {
     if [ -e "$obsidian_desktop" ]; then
-        proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 rm -rf -y /opt/obsidian
+        proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 rm -rf -y ~/obsidian
         rm "$HOME/Desktop/obsidian.desktop"
         rm "$obsidian_desktop"
         zenity --info --title="Removal Complete" --text="Obsidian has been removed successfully."
@@ -238,6 +252,17 @@ remove_vlc() {
     fi
 }
 
+remove_notion() {
+    if [ -e "$notion_desktop" ]; then
+        proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 rm -rf -y ~/notion
+        rm "$HOME/Desktop/notion.desktop"
+        rm "$notion_desktop"
+        zenity --info --title="Removal Complete" --text="Notion has been removed successfully."
+    else
+        zenity --error --title="Removal Error" --text="Notion is not installed."
+    fi
+}
+
 while true; do
     # Determine the installation status of each app
     freetube_status=$(check_freetube_installed)
@@ -249,6 +274,7 @@ while true; do
     libreoffice_status=$(check_libreoffice_installed)
     code_status=$(check_code_installed)
     vlc_status=$(check_vlc_installed)
+    notion_status=$(check_notion_installed)
 
     # Define the actions based on the installation status
     if [ "$freetube_status" == "Installed" ]; then
@@ -323,6 +349,14 @@ while true; do
         vlc_description="A free and open source cross-platform multimedia player "
     fi
 
+    if [ "$notion_status" == "Installed" ]; then
+        notion_action="Remove Notion (Status: Installed)"
+        notion_description="A freemium productivity and note-taking web application"
+    else
+        notion_action="Install Notion (Status: Not Installed)"
+        notion_description="A freemium productivity and note-taking web application"
+    fi
+
     # Set the dark GTK theme
     export GTK_THEME=Adwaita:dark
 
@@ -340,6 +374,7 @@ while true; do
         FALSE "$libreoffice_action" "$libreoffice_description" \
         FALSE "$code_action" "$code_description" \
         FALSE "$vlc_action" "$vlc_description" \
+        FALSE "$notion_action" "$notion_description" \
         --width=800 --height=400)
 
     # Check if the user canceled the selection
@@ -412,6 +447,13 @@ while true; do
                 install_vlc
             fi
             ;;        
+        "$notion_action")
+            if [ "$notion_status" == "Installed" ]; then
+                remove_notion
+            else
+                install_notion
+            fi
+            ;;    
         *)
             zenity --error --title="Error" --text="Invalid choice."
             ;;
