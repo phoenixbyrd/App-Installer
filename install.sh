@@ -207,7 +207,7 @@ remove_brave() {
 
 remove_obsidian() {
     if [ -e "$obsidian_desktop" ]; then
-        proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 rm -rf obsidian
+        proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 rm -rf Obsidian*
         rm "$HOME/Desktop/obsidian.desktop"
         rm "$obsidian_desktop"
         zenity --info --title="Removal Complete" --text="Obsidian has been removed successfully."
