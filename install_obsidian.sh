@@ -5,11 +5,11 @@ varname=$(basename $HOME/../usr/var/lib/proot-distro/installed-rootfs/debian/hom
 #Install Obsidian
 
 proot-distro login --user $varname debian --shared-tmp -- env DISPLAY=:1.0 sudo apt install zlib1g-dev
-proot-distro login --user $varname debian --shared-tmp -- env DISPLAY=:1.0  wget https://github.com/obsidianmd/obsidian-releases/releases/download/v1.3.5/Obsidian-1.3.5-arm64.AppImage
-proot-distro login --user $varname debian --shared-tmp -- env DISPLAY=:1.0  chmod +x Obsidian-1.3.5-arm64.AppImage
-proot-distro login --user $varname debian --shared-tmp -- env DISPLAY=:1.0  ./Obsidian-1.3.5-arm64.AppImage --appimage-extract
-proot-distro login --user $varname debian --shared-tmp -- env DISPLAY=:1.0  mv squashfs-root Obsidian
-proot-distro login --user $varname debian --shared-tmp -- env DISPLAY=:1.0  rm Obsidian-1.3.5-arm64.AppImage
+proot-distro login --user $varname debian --shared-tmp -- env DISPLAY=:1.0 wget https://github.com/obsidianmd/obsidian-releases/releases/download/v1.3.5/Obsidian-1.3.5-arm64.AppImage
+proot-distro login --user $varname debian --shared-tmp -- env DISPLAY=:1.0 chmod +x Obsidian-1.3.5-arm64.AppImage
+proot-distro login --user $varname debian --shared-tmp -- env DISPLAY=:1.0 ./Obsidian-1.3.5-arm64.AppImage --appimage-extract
+proot-distro login --user $varname debian --shared-tmp -- env DISPLAY=:1.0 mv squashfs-root Obsidian
+proot-distro login --user $varname debian --shared-tmp -- env DISPLAY=:1.0 rm Obsidian-1.3.5-arm64.AppImage
 
 
 
