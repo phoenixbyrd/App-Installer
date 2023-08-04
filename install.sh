@@ -162,7 +162,7 @@ remove_freetube() {
 
 remove_tor_browser() {
     if [ -e "$tor_desktop" ]; then
-        proot-distro login debian --user phoenixbyrd --shared-tmp -- env DISPLAY=:1.0 rm -rf "tor-browser"
+        proot-distro login debian --user phoenixbyrd --shared-tmp -- env DISPLAY=:1.0 rm -rf tor-browser
         rm "$HOME/Desktop/tor.desktop"
         rm "$tor_desktop"
         zenity --info --title="Removal Complete" --text="Tor Browser has been removed successfully."
@@ -207,7 +207,7 @@ remove_brave() {
 
 remove_obsidian() {
     if [ -e "$obsidian_desktop" ]; then
-        proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 rm -rf -y ~/obsidian
+        proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 rm -rf obsidian
         rm "$HOME/Desktop/obsidian.desktop"
         rm "$obsidian_desktop"
         zenity --info --title="Removal Complete" --text="Obsidian has been removed successfully."
@@ -254,7 +254,7 @@ remove_vlc() {
 
 remove_notion() {
     if [ -e "$notion_desktop" ]; then
-        proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 rm -rf -y ~/notion
+        proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 rm -rf notion
         rm "$HOME/Desktop/notion.desktop"
         rm "$notion_desktop"
         zenity --info --title="Removal Complete" --text="Notion has been removed successfully."
