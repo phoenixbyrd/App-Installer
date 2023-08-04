@@ -318,10 +318,10 @@ while true; do
     fi
 
     if [ "$obsidian_status" == "Installed" ]; then
-        obsidian_action="Remove obsidian (Status: Installed)"
+        obsidian_action="Remove Obsidian (Status: Installed)"
         obsidian_description="A private and flexible note‑taking app"
     else
-        obsidian_action="Install obsidian (Status: Not Installed)"
+        obsidian_action="Install Obsidian (Status: Not Installed)"
         obsidian_description="A private and flexible note‑taking app"
     fi
 
