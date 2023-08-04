@@ -18,7 +18,7 @@ proot-distro login --user $varname debian --shared-tmp -- env DISPLAY=:1.0  rm O
 echo "[Desktop Entry]
 Version=1.0
 Name=Obsidian
-Exec=proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 GALLIUM_DRIVER=virpipe obsidian/./obsidian --no-sandbox
+Exec=proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 GALLIUM_DRIVER=virpipe Obsidian/./obsidian --no-sandbox
 StartupNotify=true
 Terminal=false
 Icon=obsidian
