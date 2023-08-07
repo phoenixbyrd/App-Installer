@@ -12,6 +12,7 @@ Name=Remarkable
 Comment=
 Exec=proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 remarkable
 Icon=remarkable
+Categories=Office;
 Path=
 Terminal=false
 StartupNotify=false
