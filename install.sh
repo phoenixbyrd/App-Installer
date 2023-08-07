@@ -18,6 +18,8 @@ code_desktop="$HOME/../usr/share/applications/code.desktop"
 vlc_desktop="$HOME/../usr/share/applications/vlc.desktop"
 notion_desktop="$HOME/../usr/share/applications/notion.desktop"
 pycharm_desktop="$HOME/../usr/share/applications/pycharm.desktop"
+remarkable_desktop="$HOME/../usr/share/applications/remarkable.desktop"
+shatteredpd_desktop="$HOME/../usr/share/applications/shatteredpd.desktop"
 
 check_freetube_installed() {
     if [ -e "$freetube_desktop" ]; then
@@ -107,6 +109,22 @@ check_pycharm_installed() {
     fi
 }
 
+check_remarkable_installed() {
+    if [ -e "$remarkable_desktop" ]; then
+        echo "Installed"
+    else
+        echo "Not Installed"
+    fi
+}
+
+check_shatteredpd_installed() {
+    if [ -e "$shatteredpd_desktop" ]; then
+        echo "Installed"
+    else
+        echo "Not Installed"
+    fi
+}
+
 install_freetube() {
     "$script_dir/install_freetube.sh"
     zenity --info --title="Installation Complete" --text="FreeTube has been installed successfully."
@@ -160,6 +178,16 @@ install_notion() {
 install_pycharm() {
     "$script_dir/install_pycharm.sh"
     zenity --info --title="Installation Complete" --text="PyCharm has been installed successfully."
+}
+
+install_remarkable() {
+    "$script_dir/install_remarkable.sh"
+    zenity --info --title="Installation Complete" --text="Remarkable has been installed successfully."
+}
+
+install_shatteredpd() {
+    "$script_dir/install_shatteredpd.sh"
+    zenity --info --title="Installation Complete" --text="Shattered Pixel Dungeon has been installed successfully."
 }
 
 remove_freetube() {
@@ -288,6 +316,29 @@ remove_pycharm() {
     fi
 }
 
+remove_remarkable() {
+    if [ -e "$remarkable_desktop" ]; then
+        proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 sudo apt remove remarkable -y
+        proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 sudo apt autoremove -y
+        rm "$HOME/Desktop/remarkable.desktop"
+        rm "$remarkable_desktop"
+        zenity --info --title="Removal Complete" --text="Remarkable has been removed successfully."
+    else
+        zenity --error --title="Removal Error" --text="Remarkable is not installed."
+    fi
+}
+
+remove_shatteredpd() {
+    if [ -e "$shatteredpd_desktop" ]; then
+        proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 rm -rf /opt/ShatteredPD
+        rm "$HOME/Desktop/shatteredpd.desktop"
+        rm "$shatteredpd_desktop"
+        zenity --info --title="Removal Complete" --text="Shattered Pixel Dungeon has been removed successfully."
+    else
+        zenity --error --title="Removal Error" --text="Shattered Pixel Dungeon is not installed."
+    fi
+}
+
 while true; do
     # Determine the installation status of each app
     freetube_status=$(check_freetube_installed)
@@ -301,6 +352,8 @@ while true; do
     vlc_status=$(check_vlc_installed)
     notion_status=$(check_notion_installed)
     pycharm_status=$(check_pycharm_installed)
+    remarkable_status=$(check_remarkable_installed)
+    shatteredpd_status=$(check_shatteredpd_installed)
 
     # Define the actions based on the installation status
     if [ "$freetube_status" == "Installed" ]; then
@@ -390,6 +443,22 @@ while true; do
         pycharm_action="Install PyCharm (Status: Not Installed)"
         pycharm_description="A Python IDE"
     fi
+    
+        if [ "$remarkable_status" == "Installed" ]; then
+        remarkable_action="Remove Remarkable (Status: Installed)"
+        remarkable_description="A Markdown Editor"
+    else
+        remarkable_action="Install Remarkable (Status: Not Installed)"
+        remarkable_description="A Markdown Editor"
+    fi
+
+        if [ "$shatteredpd_status" == "Installed" ]; then
+        shatteredpd_action="Remove Shattered Pixel Dungeon (Status: Installed)"
+        shatteredpd_description="A traditional roguelike dungeon crawler RPG"
+    else
+        shatteredpd_action="Install Shattered Pixel Dungeon (Status: Not Installed)"
+        shatteredpd_description="A traditional roguelike dungeon crawler RPG"
+    fi
 
 
     # Set the dark GTK theme
@@ -411,6 +480,8 @@ while true; do
         FALSE "$vlc_action" "$vlc_description" \
         FALSE "$notion_action" "$notion_description" \
         FALSE "$pycharm_action" "$pycharm_description" \
+        FALSE "$remarkable_action" "$remarkable_description" \
+        FALSE "$shatteredpd_action" "$shatteredpd_description" \
         --width=800 --height=400)
 
     # Check if the user canceled the selection
@@ -495,6 +566,20 @@ while true; do
                 remove_pycharm
             else
                 install_pycharm
+            fi
+            ;;   
+        "$remarkable_action")
+            if [ "$remarkable_status" == "Installed" ]; then
+                remove_remarkable
+            else
+                install_remarkable
+            fi
+            ;;   
+        "$shatteredpd_action")
+            if [ "$shatteredpd_status" == "Installed" ]; then
+                remove_shatteredpd
+            else
+                install_shatteredpd
             fi
             ;;   
         *)
