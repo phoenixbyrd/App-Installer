@@ -492,9 +492,9 @@ while true; do
             ;;   
         "$pycharm_action")
             if [ "$pycharm_status" == "Installed" ]; then
-                remove_notion
+                remove_pycharm
             else
-                install_notion
+                install_pycharm
             fi
             ;;   
         *)
