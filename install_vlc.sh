@@ -16,7 +16,7 @@ Path=
 Terminal=false
 StartupNotify=false
 
-" > ~/Desktop/vlc.desktop
+" > $HOME/Desktop/vlc.desktop
 
 chmod +x $HOME/Desktop/vlc.desktop
 cp $HOME/Desktop/vlc.desktop $HOME/../usr/share/applications/vlc.desktop 
