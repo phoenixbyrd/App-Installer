@@ -15,7 +15,7 @@ Icon=discord
 Type=Application
 StartupNotify=true
 Categories=Network;InstantMessaging;
-" > $HOME//Desktop/webcord.desktop
+" > $HOME/Desktop/webcord.desktop
 
-chmod +x $HOME//Desktop/webcord.desktop
-cp $HOME//Desktop/webcord.desktop $HOME/../usr/share/applications/webcord.desktop 
+chmod +x $HOME/Desktop/webcord.desktop
+cp $HOME/Desktop/webcord.desktop $HOME/../usr/share/applications/webcord.desktop 
