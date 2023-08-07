@@ -11,7 +11,7 @@ proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 sudo 
 echo "[Desktop Entry]
 Name=PyCharm
 Comment=A Python IDE
-Exec=proot-distro login debian --user phoenixbyrd --shared-tmp -- env DISPLAY=:1.0 /opt/pycharm-community/bin/./pycharm.sh
+Exec=proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 /opt/pycharm-community/bin/./pycharm.sh
 Icon=pycharm
 Type=Application
 StartupNotify=true
