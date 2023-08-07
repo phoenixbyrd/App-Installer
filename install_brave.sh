@@ -24,7 +24,7 @@ Exec=proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 
 [Desktop Action new-private-window]
 Name=New Incognito Window
 Exec=proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 /usr/bin/brave-browser-stable --incognito
-" > $HOME//Desktop/brave.desktop
+" > $HOME/Desktop/brave.desktop
 
-chmod +x $HOME//Desktop/brave.desktop
-cp $HOME//Desktop/brave.desktop $HOME/../usr/share/applications/brave.desktop 
+chmod +x $HOME/Desktop/brave.desktop
+cp $HOME/Desktop/brave.desktop $HOME/../usr/share/applications/brave.desktop 
