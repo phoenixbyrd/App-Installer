@@ -482,7 +482,7 @@ while true; do
         FALSE "$pycharm_action" "$pycharm_description" \
         FALSE "$remarkable_action" "$remarkable_description" \
         FALSE "$shatteredpd_action" "$shatteredpd_description" \
-        --width=800 --height=400)
+        --width=800 --height=450)
 
     # Check if the user canceled the selection
     if [ -z "$choice" ]; then
