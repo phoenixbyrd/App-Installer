@@ -24,9 +24,7 @@ StartupWMClass=Tor Browser
 Path=
 Terminal=false
 StartupNotify=false
-" > $HOME//Desktop/tor.desktop
+" > $HOME/Desktop/tor.desktop
 
-chmod +x $HOME//Desktop/tor.desktop
-cp $HOME//Desktop/tor.desktop $HOME/../usr/share/applications/tor.desktop
-
-echo "Tor Browser installation completed."
+chmod +x $HOME/Desktop/tor.desktop
+cp $HOME/Desktop/tor.desktop $HOME/../usr/share/applications/tor.desktop
