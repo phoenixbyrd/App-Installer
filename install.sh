@@ -518,6 +518,9 @@ while true; do
         FALSE "$remarkable_action" "$remarkable_description" \
         FALSE "$shatteredpd_action" "$shatteredpd_description" \
         FALSE "$el_action" "$el_description" \
+        FALSE "" "" \
+        FALSE "" "" \
+        FALSE "" "" \
         --width=850 --height=450)
 
     # Check if the user canceled the selection
