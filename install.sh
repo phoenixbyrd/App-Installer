@@ -1,4 +1,4 @@
-#!/bin/bash
+f#!/bin/bash
 
 varname=$(basename $HOME/../usr/var/lib/proot-distro/installed-rootfs/debian/home/*)
 
@@ -518,6 +518,7 @@ choice=$(zenity --list --radiolist \
     FALSE "$remarkable_action" "$remarkable_description" \
     FALSE "$shatteredpd_action" "$shatteredpd_description" \
     FALSE "$el_action" "$el_description" \
+    SEPARATOR \
     --width=850 --height=450)
 
     # Check if the user canceled the selection
