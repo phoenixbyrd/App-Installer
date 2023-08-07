@@ -499,9 +499,6 @@ while true; do
     # Set the dark GTK theme
     export GTK_THEME=Adwaita:dark
 
-# Define the dummy entry
-dummy_entry="FALSE DUMMY_ACTION DUMMY_DESCRIPTION"
-
 # Display the selection dialog
 choice=$(zenity --list --radiolist \
     --title="App Installer" \
@@ -521,7 +518,6 @@ choice=$(zenity --list --radiolist \
     FALSE "$remarkable_action" "$remarkable_description" \
     FALSE "$shatteredpd_action" "$shatteredpd_description" \
     FALSE "$el_action" "$el_description" \
-    $dummy_entry \
     --width=850 --height=450)
 
     # Check if the user canceled the selection
