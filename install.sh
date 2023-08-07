@@ -499,29 +499,30 @@ while true; do
     # Set the dark GTK theme
     export GTK_THEME=Adwaita:dark
 
-    # Display the selection dialog
-    choice=$(zenity --list --radiolist \
-        --title="App Installer" \
-        --text="Select an action:" \
-        --column="Select" --column="Action" --column="Description" \
-        FALSE "$freetube_action" "$freetube_description" \
-        FALSE "$tor_browser_action" "$tor_browser_description" \
-        FALSE "$webcord_action" "$webcord_description" \
-        FALSE "$vivaldi_action" "$vivaldi_description" \
-        FALSE "$brave_action" "$brave_description" \
-        FALSE "$obsidian_action" "$obsidian_description" \
-        FALSE "$libreoffice_action" "$libreoffice_description" \
-        FALSE "$code_action" "$code_description" \
-        FALSE "$vlc_action" "$vlc_description" \
-        FALSE "$notion_action" "$notion_description" \
-        FALSE "$pycharm_action" "$pycharm_description" \
-        FALSE "$remarkable_action" "$remarkable_description" \
-        FALSE "$shatteredpd_action" "$shatteredpd_description" \
-        FALSE "$el_action" "$el_description" \
-        FALSE "" "" \
-        FALSE "" "" \
-        FALSE "" "" \
-        --width=850 --height=450)
+# Define the dummy entry
+dummy_entry="FALSE DUMMY_ACTION DUMMY_DESCRIPTION"
+
+# Display the selection dialog
+choice=$(zenity --list --radiolist \
+    --title="App Installer" \
+    --text="Select an action:" \
+    --column="Select" --column="Action" --column="Description" \
+    FALSE "$freetube_action" "$freetube_description" \
+    FALSE "$tor_browser_action" "$tor_browser_description" \
+    FALSE "$webcord_action" "$webcord_description" \
+    FALSE "$vivaldi_action" "$vivaldi_description" \
+    FALSE "$brave_action" "$brave_description" \
+    FALSE "$obsidian_action" "$obsidian_description" \
+    FALSE "$libreoffice_action" "$libreoffice_description" \
+    FALSE "$code_action" "$code_description" \
+    FALSE "$vlc_action" "$vlc_description" \
+    FALSE "$notion_action" "$notion_description" \
+    FALSE "$pycharm_action" "$pycharm_description" \
+    FALSE "$remarkable_action" "$remarkable_description" \
+    FALSE "$shatteredpd_action" "$shatteredpd_description" \
+    FALSE "$el_action" "$el_description" \
+    $dummy_entry \
+    --width=850 --height=450)
 
     # Check if the user canceled the selection
     if [ -z "$choice" ]; then
