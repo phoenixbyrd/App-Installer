@@ -20,6 +20,7 @@ notion_desktop="$HOME/../usr/share/applications/notion.desktop"
 pycharm_desktop="$HOME/../usr/share/applications/pycharm.desktop"
 remarkable_desktop="$HOME/../usr/share/applications/remarkable.desktop"
 shatteredpd_desktop="$HOME/../usr/share/applications/shatteredpd.desktop"
+el_desktop="$HOME/../usr/share/applications/el.desktop"
 
 check_freetube_installed() {
     if [ -e "$freetube_desktop" ]; then
@@ -125,6 +126,15 @@ check_shatteredpd_installed() {
     fi
 }
 
+
+check_el_installed() {
+    if [ -e "$el_desktop" ]; then
+        echo "Installed"
+    else
+        echo "Not Installed"
+    fi
+}
+
 install_freetube() {
     "$script_dir/install_freetube.sh"
     zenity --info --title="Installation Complete" --text="FreeTube has been installed successfully."
@@ -188,6 +198,11 @@ install_remarkable() {
 install_shatteredpd() {
     "$script_dir/install_shatteredpd.sh"
     zenity --info --title="Installation Complete" --text="Shattered Pixel Dungeon has been installed successfully."
+}
+
+install_el() {
+    "$script_dir/install_el.sh"
+    zenity --info --title="Installation Complete" --text="Eternal Lands has been installed successfully."
 }
 
 remove_freetube() {
@@ -339,6 +354,18 @@ remove_shatteredpd() {
     fi
 }
 
+remove_el() {
+    if [ -e "$el_desktop" ]; then
+        proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 rm -rf eternallands
+        rm "$HOME/Desktop/el.desktop"
+        rm "$el_desktop"
+        zenity --info --title="Removal Complete" --text="Eternal Lands has been removed successfully."
+    else
+        zenity --error --title="Removal Error" --text="Eternal Lands is not installed."
+    fi
+}
+
+
 while true; do
     # Determine the installation status of each app
     freetube_status=$(check_freetube_installed)
@@ -354,6 +381,7 @@ while true; do
     pycharm_status=$(check_pycharm_installed)
     remarkable_status=$(check_remarkable_installed)
     shatteredpd_status=$(check_shatteredpd_installed)
+    el_status=$(check_el_installed)
 
     # Define the actions based on the installation status
     if [ "$freetube_status" == "Installed" ]; then
@@ -436,7 +464,7 @@ while true; do
         notion_description="A freemium productivity and note-taking web application"
     fi
 
-        if [ "$pycharm_status" == "Installed" ]; then
+    if [ "$pycharm_status" == "Installed" ]; then
         pycharm_action="Remove PyCharm (Status: Installed)"
         pycharm_description="A Python IDE"
     else
@@ -444,7 +472,7 @@ while true; do
         pycharm_description="A Python IDE"
     fi
     
-        if [ "$remarkable_status" == "Installed" ]; then
+    if [ "$remarkable_status" == "Installed" ]; then
         remarkable_action="Remove Remarkable (Status: Installed)"
         remarkable_description="A Markdown Editor"
     else
@@ -452,7 +480,7 @@ while true; do
         remarkable_description="A Markdown Editor"
     fi
 
-        if [ "$shatteredpd_status" == "Installed" ]; then
+    if [ "$shatteredpd_status" == "Installed" ]; then
         shatteredpd_action="Remove Shattered Pixel Dungeon (Status: Installed)"
         shatteredpd_description="A traditional roguelike dungeon crawler RPG"
     else
@@ -460,6 +488,13 @@ while true; do
         shatteredpd_description="A traditional roguelike dungeon crawler RPG"
     fi
 
+    if [ "$el_status" == "Installed" ]; then
+        el_action="Remove Eternal Lands (Status: Installed)"
+        el_description="A FREE 3D fantasy MMORPG "
+    else
+        el_action="Install Eternal Lands (Status: Not Installed)"
+        el_description="A FREE 3D fantasy MMORPG "
+    fi
 
     # Set the dark GTK theme
     export GTK_THEME=Adwaita:dark
@@ -482,6 +517,7 @@ while true; do
         FALSE "$pycharm_action" "$pycharm_description" \
         FALSE "$remarkable_action" "$remarkable_description" \
         FALSE "$shatteredpd_action" "$shatteredpd_description" \
+        FALSE "$el_action" "$el_description" \
         --width=850 --height=450)
 
     # Check if the user canceled the selection
@@ -580,6 +616,13 @@ while true; do
                 remove_shatteredpd
             else
                 install_shatteredpd
+            fi
+            ;;   
+        "$el_action")
+            if [ "$el_status" == "Installed" ]; then
+                remove_el
+            else
+                install_el
             fi
             ;;   
         *)
