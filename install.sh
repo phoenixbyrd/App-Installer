@@ -17,6 +17,7 @@ libreoffice_desktop="$HOME/../usr/share/applications/libreoffice-base.desktop"
 code_desktop="$HOME/../usr/share/applications/code.desktop"
 vlc_desktop="$HOME/../usr/share/applications/vlc.desktop"
 notion_desktop="$HOME/../usr/share/applications/notion.desktop"
+pycharm_desktop="$HOME/../usr/share/applications/pycharm.desktop"
 
 check_freetube_installed() {
     if [ -e "$freetube_desktop" ]; then
@@ -98,6 +99,14 @@ check_notion_installed() {
     fi
 }
 
+check_pycharm_installed() {
+    if [ -e "$pycharm_desktop" ]; then
+        echo "Installed"
+    else
+        echo "Not Installed"
+    fi
+}
+
 install_freetube() {
     "$script_dir/install_freetube.sh"
     zenity --info --title="Installation Complete" --text="FreeTube has been installed successfully."
@@ -148,6 +157,10 @@ install_notion() {
     zenity --info --title="Installation Complete" --text="Notion has been installed successfully."
 }
 
+install_pycharm() {
+    "$script_dir/install_pycharm.sh"
+    zenity --info --title="Installation Complete" --text="PyCharm has been installed successfully."
+}
 
 remove_freetube() {
     if [ -e "$freetube_desktop" ]; then
@@ -264,6 +277,17 @@ remove_notion() {
     fi
 }
 
+remove_pycharm() {
+    if [ -e "$pycharm_desktop" ]; then
+        proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 rm -rf /opt/pycharm-community
+        rm "$HOME/Desktop/pycharm.desktop"
+        rm "$pycharm_desktop"
+        zenity --info --title="Removal Complete" --text="PyCharm has been removed successfully."
+    else
+        zenity --error --title="Removal Error" --text="PyCharm is not installed."
+    fi
+}
+
 while true; do
     # Determine the installation status of each app
     freetube_status=$(check_freetube_installed)
@@ -276,6 +300,7 @@ while true; do
     code_status=$(check_code_installed)
     vlc_status=$(check_vlc_installed)
     notion_status=$(check_notion_installed)
+    pycharm_status=$(check_pycharm_installed)
 
     # Define the actions based on the installation status
     if [ "$freetube_status" == "Installed" ]; then
@@ -358,6 +383,15 @@ while true; do
         notion_description="A freemium productivity and note-taking web application"
     fi
 
+        if [ "$pycharm_status" == "Installed" ]; then
+        pycharm_action="Remove PyCharm (Status: Installed)"
+        pycharm_description="A Python IDE"
+    else
+        pycharm_action="Install PyCharm (Status: Not Installed)"
+        pycharm_description="A Python IDE"
+    fi
+
+
     # Set the dark GTK theme
     export GTK_THEME=Adwaita:dark
 
@@ -376,6 +410,7 @@ while true; do
         FALSE "$code_action" "$code_description" \
         FALSE "$vlc_action" "$vlc_description" \
         FALSE "$notion_action" "$notion_description" \
+        FALSE "$pycharm_action" "$pycharm_description" \
         --width=800 --height=400)
 
     # Check if the user canceled the selection
@@ -454,7 +489,14 @@ while true; do
             else
                 install_notion
             fi
-            ;;    
+            ;;   
+        "$pycharm_action")
+            if [ "$pycharm_status" == "Installed" ]; then
+                remove_notion
+            else
+                install_notion
+            fi
+            ;;   
         *)
             zenity --error --title="Error" --text="Invalid choice."
             ;;
