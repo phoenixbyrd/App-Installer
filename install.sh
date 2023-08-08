@@ -571,21 +571,26 @@ choice=$(zenity --list --radiolist \
     --title="App Installer" \
     --text="Select an action:" \
     --column="Select" --column="Action" --column="Description" \
+    FALSE "Internet" "" \
     FALSE "$freetube_action" "$freetube_description" \
     FALSE "$tor_browser_action" "$tor_browser_description" \
     FALSE "$webcord_action" "$webcord_description" \
     FALSE "$vivaldi_action" "$vivaldi_description" \
     FALSE "$brave_action" "$brave_description" \
+    FALSE "$librewolf_action" "$librewolf_description" \
+    FALSE "Office" "" \
     FALSE "$obsidian_action" "$obsidian_description" \
-    FALSE "$libreoffice_action" "$libreoffice_description" \
-    FALSE "$code_action" "$code_description" \
-    FALSE "$vlc_action" "$vlc_description" \
     FALSE "$notion_action" "$notion_description" \
-    FALSE "$pycharm_action" "$pycharm_description" \
     FALSE "$remarkable_action" "$remarkable_description" \
+    FALSE "$libreoffice_action" "$libreoffice_description" \
+    FALSE "Development" "" \
+    FALSE "$code_action" "$code_description" \
+    FALSE "$pycharm_action" "$pycharm_description" \
+    FALSE "Media" "" \
+    FALSE "$vlc_action" "$vlc_description" \
+    FALSE "Games" "" \
     FALSE "$shatteredpd_action" "$shatteredpd_description" \
     FALSE "$el_action" "$el_description" \
-    FALSE "$librewolf_action" "$librewolf_description" \
     FALSE "$unciv_action" "$unciv_description" \
     SEPARATOR \
     --width=850 --height=450)
