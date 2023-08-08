@@ -21,6 +21,8 @@ pycharm_desktop="$HOME/../usr/share/applications/pycharm.desktop"
 remarkable_desktop="$HOME/../usr/share/applications/remarkable.desktop"
 shatteredpd_desktop="$HOME/../usr/share/applications/shatteredpd.desktop"
 el_desktop="$HOME/../usr/share/applications/el.desktop"
+librewolf_desktop="$HOME/../usr/share/applications/librewolf.desktop"
+unciv_desktop="$HOME/../usr/share/applications/unciv.desktop"
 
 check_freetube_installed() {
     if [ -e "$freetube_desktop" ]; then
@@ -135,6 +137,22 @@ check_el_installed() {
     fi
 }
 
+check_librewolf_installed() {
+    if [ -e "$librewolf_desktop" ]; then
+        echo "Installed"
+    else
+        echo "Not Installed"
+    fi
+}
+
+check_unciv_installed() {
+    if [ -e "$unciv_desktop" ]; then
+        echo "Installed"
+    else
+        echo "Not Installed"
+    fi
+}
+
 install_freetube() {
     "$script_dir/install_freetube.sh"
     zenity --info --title="Installation Complete" --text="FreeTube has been installed successfully."
@@ -203,6 +221,16 @@ install_shatteredpd() {
 install_el() {
     "$script_dir/install_el.sh"
     zenity --info --title="Installation Complete" --text="Eternal Lands has been installed successfully."
+}
+
+install_librewolf() {
+    "$script_dir/install_librewolf.sh"
+    zenity --info --title="Installation Complete" --text="Librewolf has been installed successfully."
+}
+
+install_unciv() {
+    "$script_dir/install_unciv.sh"
+    zenity --info --title="Installation Complete" --text="Unciv has been installed successfully."
 }
 
 remove_freetube() {
@@ -365,6 +393,27 @@ remove_el() {
     fi
 }
 
+remove_librewolf() {
+    if [ -e "$librewolf_desktop" ]; then
+        proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 rm -rf /opt/librewolf
+        rm "$HOME/Desktop/librewolf.desktop"
+        rm "$librewolf_desktop"
+        zenity --info --title="Removal Complete" --text="ibrewolf has been removed successfully."
+    else
+        zenity --error --title="Removal Error" --text="Librewolf is not installed."
+    fi
+}
+
+remove_unciv() {
+    if [ -e "$unciv_desktop" ]; then
+        proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 rm /usr/games/Unciv.jar
+        rm "$HOME/Desktop/unciv.desktop"
+        rm "$unciv_desktop"
+        zenity --info --title="Removal Complete" --text="Unciv has been removed successfully."
+    else
+        zenity --error --title="Removal Error" --text="Unciv is not installed."
+    fi
+}
 
 while true; do
     # Determine the installation status of each app
@@ -382,6 +431,8 @@ while true; do
     remarkable_status=$(check_remarkable_installed)
     shatteredpd_status=$(check_shatteredpd_installed)
     el_status=$(check_el_installed)
+    librewolf_status=$(check_librewolf_installed)
+    unciv_status=$(check_unciv_installed)
 
     # Define the actions based on the installation status
     if [ "$freetube_status" == "Installed" ]; then
@@ -496,6 +547,22 @@ while true; do
         el_description="A FREE 3D fantasy MMORPG "
     fi
 
+    if [ "$librewolf_status" == "Installed" ]; then
+        librewolf_action="Remove Librewolf (Status: Installed)"
+        librewolf_description="A free and open-source web browser and fork of Firefox with an emphasis on privacy and security"
+    else
+        librewolf_action="Install Librewolf (Status: Not Installed)"
+        librewolf_description="A free and open-source web browser and fork of Firefox with an emphasis on privacy and security"
+    fi
+
+    if [ "$unciv_status" == "Installed" ]; then
+        unciv_action="Remove Unciv (Status: Installed)"
+        unciv_description="Open-source remake of Civ V "
+    else
+        unciv_action="Install Unciv (Status: Not Installed)"
+        unciv_description="Open-source remake of Civ V"
+    fi
+
     # Set the dark GTK theme
     export GTK_THEME=Adwaita:dark
 
@@ -518,6 +585,8 @@ choice=$(zenity --list --radiolist \
     FALSE "$remarkable_action" "$remarkable_description" \
     FALSE "$shatteredpd_action" "$shatteredpd_description" \
     FALSE "$el_action" "$el_description" \
+    FALSE "$librewolf_action" "$librewolf_description" \
+    FALSE "$unciv_action" "$unciv_description" \
     SEPARATOR \
     --width=850 --height=450)
 
@@ -624,6 +693,20 @@ choice=$(zenity --list --radiolist \
                 remove_el
             else
                 install_el
+            fi
+            ;;   
+            "$librewolf_action")
+            if [ "$librewolf_status" == "Installed" ]; then
+                remove_librewolf
+            else
+                install_librewolf
+            fi
+            ;;   
+            "$unciv_action")
+            if [ "$unciv_status" == "Installed" ]; then
+                remove_unciv
+            else
+                install_unciv
             fi
             ;;   
         *)
