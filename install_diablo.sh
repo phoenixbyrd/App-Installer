@@ -5,6 +5,7 @@ proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 wget 
 proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 mkdir -p devilutionx
 proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 tar -xvf devilutionx-linux-aarch64.tar.xz  -C devilutionx
 proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 mv devilutionx /opt
+proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 rm devilutionx-linux-aarch64.tar.xz
 
 # Create the desktop entry
 echo "[Desktop Entry]
