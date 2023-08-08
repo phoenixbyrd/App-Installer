@@ -3,7 +3,7 @@ varname=$(basename $HOME/../usr/var/lib/proot-distro/installed-rootfs/debian/hom
 
 proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 wget https://www.eternal-lands.com/EternalLands-Linux-Installer_1.9.6.1.sh
 proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 chmod +x EternalLands-Linux-Installer_1.9.6.1.sh
-proot-distro login debian --user phoenixbyrd --shared-tmp -- env DISPLAY=:1.0 xfce4-terminal -e ./EternalLands-Linux-Installer_1.9.6.1.sh
+proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 xfce4-terminal -e ./EternalLands-Linux-Installer_1.9.6.1.sh
 proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 rm EternalLands-Linux-Installer_1.9.6.1.sh
 
 # Create the desktop entry
