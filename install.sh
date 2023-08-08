@@ -431,7 +431,7 @@ remove_unciv() {
 
 remove_diablo() {
     if [ -e "$diablo_desktop" ]; then
-        proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 rm -rf /opt/devilutionx
+        rm -rf ../usr/var/lib/proot-distro/installed-rootfs/debian/opt/devilutionx
         rm "$HOME/Desktop/diablo.desktop"
         rm "$diablo_desktop"
         zenity --info --title="Removal Complete" --text="DevilutionX has been removed successfully."
