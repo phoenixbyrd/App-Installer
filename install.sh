@@ -549,10 +549,10 @@ while true; do
 
     if [ "$librewolf_status" == "Installed" ]; then
         librewolf_action="Remove Librewolf (Status: Installed)"
-        librewolf_description="A free and open-source web browser and fork of Firefox with an emphasis on privacy and security"
+        librewolf_description="A free and open-source web browser"
     else
         librewolf_action="Install Librewolf (Status: Not Installed)"
-        librewolf_description="A free and open-source web browser and fork of Firefox with an emphasis on privacy and security"
+        librewolf_description="A free and open-source web browser"
     fi
 
     if [ "$unciv_status" == "Installed" ]; then
