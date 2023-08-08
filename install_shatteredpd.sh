@@ -10,7 +10,7 @@ proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 mv Sh
 echo "[Desktop Entry]
 Encoding=UTF-8
 Name=Shattered Pixel Dungeon
-Exec=proot-distro login debian --user phoenixbyrd --shared-tmp -- env DISPLAY=:1.0 java -jar /opt/ShatteredPD/ShatteredPD.jar
+Exec=proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 java -jar /opt/ShatteredPD/ShatteredPD.jar
 Terminal=false
 Icon=com.shatteredpixel.shatteredpixeldungeon
 Type=Application
