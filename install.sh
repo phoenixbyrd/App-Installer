@@ -572,7 +572,6 @@ choice=$(zenity --list --radiolist \
     --text="Select an action:" \
     --column="Select" --column="Action" --column="Description" \
     FALSE "INTERNET" "" \
-    SEPARATOR \
     FALSE "$freetube_action" "$freetube_description" \
     FALSE "$tor_browser_action" "$tor_browser_description" \
     FALSE "$webcord_action" "$webcord_description" \
@@ -580,20 +579,16 @@ choice=$(zenity --list --radiolist \
     FALSE "$brave_action" "$brave_description" \
     FALSE "$librewolf_action" "$librewolf_description" \
     FALSE "OFFICE" "" \
-    SEPARATOR \
     FALSE "$obsidian_action" "$obsidian_description" \
     FALSE "$notion_action" "$notion_description" \
     FALSE "$remarkable_action" "$remarkable_description" \
     FALSE "$libreoffice_action" "$libreoffice_description" \
     FALSE "DEVELOPMENT" "" \
-    SEPARATOR \
     FALSE "$code_action" "$code_description" \
     FALSE "$pycharm_action" "$pycharm_description" \
     FALSE "MEDIA" "" \
-    SEPARATOR \
     FALSE "$vlc_action" "$vlc_description" \
     FALSE "GAMES" "" \
-    SEPARATOR \
     FALSE "$shatteredpd_action" "$shatteredpd_description" \
     FALSE "$el_action" "$el_description" \
     FALSE "$unciv_action" "$unciv_description" \
