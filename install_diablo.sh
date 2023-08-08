@@ -1,11 +1,10 @@
 #!/bin/bash
 varname=$(basename $HOME/../usr/var/lib/proot-distro/installed-rootfs/debian/home/*)
 
-wget https://github.com/diasurgical/devilutionX/releases/download/1.5.0/devilutionx-linux-aarch64.tar.xz
-mkdir ~/devilutionx
-tar -xvf devilutionx-linux-aarch64.tar.xz  -C ~/devilutionx
-mv devilutionx ../usr/var/lib/proot-distro/installed-rootfs/debian/opt/
-rm devilutionx-linux-aarch64.tar.xz
+proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 wget https://github.com/diasurgical/devilutionX/releases/download/1.5.0/devilutionx-linux-aarch64.tar.xz
+proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 mkdir -p devilutionx
+proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 tar -xvf devilutionx-linux-aarch64.tar.xz  -C devilutionx
+proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 mv devilutionx /opt
 
 # Create the desktop entry
 echo "[Desktop Entry]
