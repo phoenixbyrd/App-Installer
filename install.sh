@@ -589,7 +589,7 @@ while true; do
         unciv_description="Open-source remake of Civ V"
     fi
 
-    if [ "$unciv_status" == "Installed" ]; then
+    if [ "$diablo_status" == "Installed" ]; then
         diablo_action="Remove DevilutionX (Status: Installed)"
         diablo_description="Diablo build for modern operating systems  "
     else
