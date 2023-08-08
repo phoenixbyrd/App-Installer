@@ -14,7 +14,7 @@ Version=1.0
 Type=Application
 Name=LibreWolf
 Comment=
-Exec=proot-distro login debian --user phoenixbyrd --shared-tmp -- env DISPLAY=:1.0 /opt/librewolf/./librewolf
+Exec=proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 /opt/librewolf/./librewolf
 Icon=librewolf
 Categories=Network;
 Path=
