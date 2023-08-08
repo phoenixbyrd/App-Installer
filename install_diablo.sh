@@ -4,7 +4,7 @@ varname=$(basename $HOME/../usr/var/lib/proot-distro/installed-rootfs/debian/hom
 wget https://github.com/diasurgical/devilutionX/releases/download/1.5.0/devilutionx-linux-aarch64.tar.xz
 mkdir ~/devilutionx
 tar -xvf devilutionx-linux-aarch64.tar.xz  -C ~/devilutionx
-mv devilutionx $HOME/../usr/var/lib/proot-distro/installed-rootfs/debian/opt/
+mv devilutionx ../usr/var/lib/proot-distro/installed-rootfs/debian/opt/
 
 # Create the desktop entry
 echo "[Desktop Entry]
