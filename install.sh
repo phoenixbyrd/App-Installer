@@ -23,6 +23,7 @@ shatteredpd_desktop="$HOME/../usr/share/applications/shatteredpd.desktop"
 el_desktop="$HOME/../usr/share/applications/el.desktop"
 librewolf_desktop="$HOME/../usr/share/applications/librewolf.desktop"
 unciv_desktop="$HOME/../usr/share/applications/unciv.desktop"
+diablo_desktop="$HOME/../usr/share/applications/diablo.desktop"
 
 check_freetube_installed() {
     if [ -e "$freetube_desktop" ]; then
@@ -153,6 +154,14 @@ check_unciv_installed() {
     fi
 }
 
+check_diablo_installed() {
+    if [ -e "$diablo_desktop" ]; then
+        echo "Installed"
+    else
+        echo "Not Installed"
+    fi
+}
+
 install_freetube() {
     "$script_dir/install_freetube.sh"
     zenity --info --title="Installation Complete" --text="FreeTube has been installed successfully."
@@ -231,6 +240,11 @@ install_librewolf() {
 install_unciv() {
     "$script_dir/install_unciv.sh"
     zenity --info --title="Installation Complete" --text="Unciv has been installed successfully."
+}
+
+install_diablo() {
+    "$script_dir/install_diablo.sh"
+    zenity --info --title="Installation Complete" --text="DevilutionX has been installed successfully."
 }
 
 remove_freetube() {
@@ -415,6 +429,17 @@ remove_unciv() {
     fi
 }
 
+remove_diablo() {
+    if [ -e "$diablo_desktop" ]; then
+        proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 rm /opt/devilutionx
+        rm "$HOME/Desktop/diablo.desktop"
+        rm "$diablo_desktop"
+        zenity --info --title="Removal Complete" --text="DevilutionX has been removed successfully."
+    else
+        zenity --error --title="Removal Error" --text="DevilutionX is not installed."
+    fi
+}
+
 while true; do
     # Determine the installation status of each app
     freetube_status=$(check_freetube_installed)
@@ -433,6 +458,7 @@ while true; do
     el_status=$(check_el_installed)
     librewolf_status=$(check_librewolf_installed)
     unciv_status=$(check_unciv_installed)
+    diablo_status=$(check_diablo_installed)
 
     # Define the actions based on the installation status
     if [ "$freetube_status" == "Installed" ]; then
@@ -563,6 +589,14 @@ while true; do
         unciv_description="Open-source remake of Civ V"
     fi
 
+    if [ "$unciv_status" == "Installed" ]; then
+        diablo_action="Remove DevilutionX (Status: Installed)"
+        diablo_description="Diablo build for modern operating systems  "
+    else
+        diablo_action="Install DevilutionX (Status: Not Installed)"
+        diablo_description="Diablo build for modern operating systems "
+    fi
+
     # Set the dark GTK theme
     export GTK_THEME=Adwaita:dark
 
@@ -587,6 +621,7 @@ choice=$(zenity --list --radiolist \
     FALSE "$el_action" "$el_description" \
     FALSE "$librewolf_action" "$librewolf_description" \
     FALSE "$unciv_action" "$unciv_description" \
+    FALSE "$diablo_action" "$diablo_description" \
     SEPARATOR \
     --width=850 --height=450)
 
@@ -702,11 +737,18 @@ choice=$(zenity --list --radiolist \
                 install_librewolf
             fi
             ;;   
-            "$unciv_action")
+        "$unciv_action")
             if [ "$unciv_status" == "Installed" ]; then
                 remove_unciv
             else
                 install_unciv
+            fi
+            ;; 
+        "$diablo_action")
+            if [ "$diablo_status" == "Installed" ]; then
+                remove_diablo
+            else
+                install_diablo
             fi
             ;;   
         *)
