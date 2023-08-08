@@ -5,6 +5,7 @@ wget https://github.com/diasurgical/devilutionX/releases/download/1.5.0/deviluti
 mkdir ~/devilutionx
 tar -xvf devilutionx-linux-aarch64.tar.xz  -C ~/devilutionx
 mv devilutionx ../usr/var/lib/proot-distro/installed-rootfs/debian/opt/
+rm devilutionx-linux-aarch64.tar.xz
 
 # Create the desktop entry
 echo "[Desktop Entry]
