@@ -24,6 +24,8 @@ el_desktop="$HOME/../usr/share/applications/el.desktop"
 librewolf_desktop="$HOME/../usr/share/applications/librewolf.desktop"
 unciv_desktop="$HOME/../usr/share/applications/unciv.desktop"
 diablo_desktop="$HOME/../usr/share/applications/diablo.desktop"
+element_desktop="$HOME/../usr/share/applications/element.desktop"
+
 
 check_freetube_installed() {
     if [ -e "$freetube_desktop" ]; then
@@ -162,6 +164,14 @@ check_diablo_installed() {
     fi
 }
 
+check_element_installed() {
+    if [ -e "$element_desktop" ]; then
+        echo "Installed"
+    else
+        echo "Not Installed"
+    fi
+}
+
 install_freetube() {
     "$script_dir/install_freetube.sh"
     zenity --info --title="Installation Complete" --text="FreeTube has been installed successfully."
@@ -245,6 +255,11 @@ install_unciv() {
 install_diablo() {
     "$script_dir/install_diablo.sh"
     zenity --info --title="Installation Complete" --text="DevilutionX has been installed successfully."
+}
+
+install_element() {
+    "$script_dir/install_element.sh"
+    zenity --info --title="Installation Complete" --text="Element has been installed successfully."
 }
 
 remove_freetube() {
@@ -440,6 +455,18 @@ remove_diablo() {
     fi
 }
 
+remove_element() {
+    if [ -e "$element_desktop" ]; then
+        proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 sudo apt remove element-desktop -y
+        proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 sudo apt autoremove -y
+        rm "$HOME/Desktop/element.desktop"
+        rm "$element_desktop"
+        zenity --info --title="Removal Complete" --text="Element has been removed successfully."
+    else
+        zenity --error --title="Removal Error" --text="Element is not installed."
+    fi
+}
+
 while true; do
     # Determine the installation status of each app
     freetube_status=$(check_freetube_installed)
@@ -459,6 +486,7 @@ while true; do
     librewolf_status=$(check_librewolf_installed)
     unciv_status=$(check_unciv_installed)
     diablo_status=$(check_diablo_installed)
+    element_status=$(check_element_installed)
 
     # Define the actions based on the installation status
     if [ "$freetube_status" == "Installed" ]; then
@@ -591,10 +619,18 @@ while true; do
 
     if [ "$diablo_status" == "Installed" ]; then
         diablo_action="Remove DevilutionX (Status: Installed)"
-        diablo_description="Diablo build for modern operating systems  "
+        diablo_description="Diablo build for modern operating systems"
     else
         diablo_action="Install DevilutionX (Status: Not Installed)"
-        diablo_description="Diablo build for modern operating systems "
+        diablo_description="Diablo build for modern operating systems"
+    fi
+
+    if [ "$element_status" == "Installed" ]; then
+        element_action="Remove Element (Status: Installed)"
+        element_description="A secure communications platform "
+    else
+        element_action="Install Element (Status: Not Installed)"
+        element_description="A secure communications platform "
     fi
 
     # Set the dark GTK theme
@@ -622,6 +658,7 @@ choice=$(zenity --list --radiolist \
     FALSE "$librewolf_action" "$librewolf_description" \
     FALSE "$unciv_action" "$unciv_description" \
     FALSE "$diablo_action" "$diablo_description" \
+    FALSE "$element_action" "$element_description" \
     SEPARATOR \
     --width=850 --height=450)
 
@@ -749,6 +786,13 @@ choice=$(zenity --list --radiolist \
                 remove_diablo
             else
                 install_diablo
+            fi
+            ;;   
+        "$element_action")
+            if [ "$element_status" == "Installed" ]; then
+                remove_element
+            else
+                install_element
             fi
             ;;   
         *)
