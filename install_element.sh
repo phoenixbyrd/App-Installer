@@ -14,7 +14,7 @@ Name=Element
 Comment=A secure communications platform 
 Exec=proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 element-desktop --no-sandbox
 Icon=element
-Categories=Internet;
+Categories=Network;
 Path=
 Terminal=false
 StartupNotify=true
