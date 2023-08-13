@@ -1,7 +1,7 @@
 #!/bin/bash
 varname=$(basename $HOME/../usr/var/lib/proot-distro/installed-rootfs/debian/home/*)
 
-proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 sudo apt install libdbus-glib-1-2
+proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 sudo apt install libdbus-glib-1-2 zlib1g-dev -y
 proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 wget https://gitlab.com/api/v4/projects/24386000/packages/generic/librewolf/116.0-1/LibreWolf.aarch64.AppImage
 proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 chmod +x LibreWolf.aarch64.AppImage
 proot-distro login debian --user phoenixbyrd --shared-tmp -- env DISPLAY=:1.0 ./LibreWolf.aarch64.AppImage --appimage-extract
