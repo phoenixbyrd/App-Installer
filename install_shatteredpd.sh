@@ -3,7 +3,7 @@ varname=$(basename $HOME/../usr/var/lib/proot-distro/installed-rootfs/debian/hom
 
 proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 sudo apt install openjdk-17-jre -y
 proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 sudo apt -f install 
-proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 sudo apt install libopenal1
+proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 sudo apt install libopenal1 zlib1g-dev -y
 proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 wget -O ShatteredPD.jar https://github.com/00-Evan/shattered-pixel-dungeon/releases/download/v2.1.4/ShatteredPD-v2.1.4-Java.jar
 proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 mkdir -p /opt/ShatteredPD
 proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 mv ShatteredPD.jar /opt/ShatteredPD/
