@@ -8,6 +8,7 @@ proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 wget 
 proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 chmod +x lunarclient-2.10.1-arm64.AppImage
 proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 ./lunarclient-2.10.1-arm64.AppImage --appimage-extract
 proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 mv squashfs-root/ /opt/lunarclient
+proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 rm lunarclient-2.10.1-arm64.AppImage
 
 # Create the desktop entry
 echo "[Desktop Entry]
