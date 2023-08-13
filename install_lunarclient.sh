@@ -3,7 +3,7 @@ varname=$(basename $HOME/../usr/var/lib/proot-distro/installed-rootfs/debian/hom
 
 proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 sudo apt install openjdk-17-jre -y
 proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 sudo apt -f install 
-proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 sudo apt install libopenal1
+proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 sudo apt install libopenal1 zlib1g-dev -y
 proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 wget https://github.com/gl91306/lunar/releases/download/v2.10.1.bruh/lunarclient-2.10.1-arm64.AppImage
 proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 chmod +x lunarclient-2.10.1-arm64.AppImage
 proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 ./lunarclient-2.10.1-arm64.AppImage --appimage-extract
