@@ -21,7 +21,7 @@ StartupNotify=true
 Terminal=false
 Icon=notion
 Type=Application
-Categories=Development;
+Categories=Office;
 " > $HOME/Desktop/notion.desktop
 
 chmod +x $HOME/Desktop/notion.desktop
