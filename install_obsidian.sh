@@ -23,7 +23,7 @@ StartupNotify=true
 Terminal=false
 Icon=obsidian
 Type=Application
-Categories=Development;
+Categories=Office;
 " > $HOME/Desktop/obsidian.desktop
 
 chmod +x $HOME/Desktop/obsidian.desktop
