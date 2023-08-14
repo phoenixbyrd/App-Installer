@@ -20,19 +20,19 @@ sudo apt install -y cabextract libfreetype6 libfreetype6:armhf libfontconfig lib
 
 #Install Wine
 
-wget https://github.com/Kron4ek/Wine-Builds/releases/download/8.7/wine-8.7-x86.tar.xz
+wget https://github.com/Kron4ek/Wine-Builds/releases/download/8.13/wine-8.13-x86.tar.xz
 
-wget https://github.com/Kron4ek/Wine-Builds/releases/download/8.7/wine-8.7-amd64.tar.xz
+wget https://github.com/Kron4ek/Wine-Builds/releases/download/8.13/wine-8.13-amd64.tar.xz
 
-tar xvf wine-8.7-x86.tar.xz
+tar xvf wine-8.13-x86.tar.xz
 
-tar xvf wine-8.7-amd64.tar.xz
+tar xvf wine-8.13-amd64.tar.xz
 
-rm wine-8.7-x86.tar.xz wine-8.7-amd64.tar.xz
+rm wine-8.13-x86.tar.xz wine-8.13-amd64.tar.xz
 
-mv wine-8.7-x86 wine
+mv wine-8.13-x86 wine
 
-mv wine-8.7-amd64 wine64
+mv wine-8.13-amd64 wine64
 
 echo '
 export BOX86_PATH=~/wine/bin/
