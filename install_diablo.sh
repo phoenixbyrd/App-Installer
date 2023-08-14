@@ -16,6 +16,7 @@ Name=DevilutionX
 Comment=
 Exec=proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 /opt/devilutionx/devilutionx
 Icon=Diablo
+Categories=Game;
 Path=
 Terminal=false
 StartupNotify=true
