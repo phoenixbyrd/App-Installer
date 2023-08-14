@@ -26,6 +26,7 @@ unciv_desktop="$HOME/../usr/share/applications/unciv.desktop"
 diablo_desktop="$HOME/../usr/share/applications/diablo.desktop"
 element_desktop="$HOME/../usr/share/applications/element.desktop"
 prism_desktop="$HOME/../usr/share/applications/prism.desktop"
+wine_desktop="$HOME/../usr/share/applications/wine32.desktop"
 
 check_freetube_installed() {
     if [ -e "$freetube_desktop" ]; then
@@ -180,6 +181,15 @@ check_prism_installed() {
     fi
 }
 
+check_wine_installed() {
+    if [ -e "$wine_desktop" ]; then
+        echo "Installed"
+    else
+        echo "Not Installed"
+    fi
+}
+
+
 install_freetube() {
     "$script_dir/install_freetube.sh"
     zenity --info --title="Installation Complete" --text="FreeTube has been installed successfully."
@@ -273,6 +283,11 @@ install_element() {
 install_prism() {
     "$script_dir/install_prismlauncher.sh"
     zenity --info --title="Installation Complete" --text="Prism Launcher has been installed successfully."
+}
+
+install_wine() {
+    "$script_dir/install_wine.sh"
+    zenity --info --title="Installation Complete" --text="Box86, Box64 and Wine has been installed successfully."
 }
 
 remove_freetube() {
@@ -485,10 +500,26 @@ remove_prism() {
         proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 sudo apt remove prismlauncher -y
         proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 sudo apt autoremove -y
         rm "$HOME/Desktop/prism.desktop"
-        rm "$element_desktop"
+        rm "$prism_desktop"
         zenity --info --title="Removal Complete" --text="Prism Launcher has been removed successfully."
     else
         zenity --error --title="Removal Error" --text="Prism Launcher is not installed."
+    fi
+}
+
+remove_wine() {
+    if [ -e "$wine_desktop" ]; then
+        proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 sudo apt remove box64-android box32-android -y
+        proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 sudo apt autoremove -y
+        proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 rm -rf wine*
+        proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 rm -rf .wine*
+        rm "$HOME/Desktop/wine32.desktop"
+        rm "$HOME/Desktop/wine64.desktop"
+        rm "$HOME/../usr/share/applications/wine32.desktop"
+        rm "$wine_desktop"
+        zenity --info --title="Removal Complete" --text="Box86, Box64 and Wine have been removed successfully."
+    else
+        zenity --error --title="Removal Error" --text="Box86, Box64 and Wine are not installed."
     fi
 }
 
@@ -513,6 +544,7 @@ while true; do
     diablo_status=$(check_diablo_installed)
     element_status=$(check_element_installed)
     prism_status=$(check_prism_installed)
+    wine_status=$(check_wine_installed)
 
     # Define the actions based on the installation status
     if [ "$freetube_status" == "Installed" ]; then
@@ -667,6 +699,14 @@ while true; do
         prism_description="A free all-in-one modpack available on all versions of Minecraft "
     fi
 
+    if [ "$wine_status" == "Installed" ]; then
+        wine_action="Remove Box86, Box64 and Wine (Status: Installed)"
+        wine_description="lets you run x86_64 Linux and Windows programs"
+    else
+        wine_action="Install Box86, Box64 and Wine (Status: Not Installed)"
+        wine_description="lets you run x86_64 Linux and Windows programs"
+    fi
+
     # Set the dark GTK theme
     export GTK_THEME=Adwaita:dark
 
@@ -694,6 +734,7 @@ choice=$(zenity --list --radiolist \
     FALSE "$diablo_action" "$diablo_description" \
     FALSE "$element_action" "$element_description" \
     FALSE "$prism_action" "$prism_description" \
+    FALSE "$wine_action" "$wine_description" \
     SEPARATOR \
     --width=875 --height=450)
 
@@ -835,6 +876,13 @@ choice=$(zenity --list --radiolist \
                 remove_prism
             else
                 install_prism
+            fi
+            ;;   
+        "$wine_action")
+            if [ "$wine_status" == "Installed" ]; then
+                remove_wine
+            else
+                install_wine
             fi
             ;;   
         *)
