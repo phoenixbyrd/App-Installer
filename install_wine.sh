@@ -2,7 +2,7 @@
 
 varname=$(basename $HOME/../usr/var/lib/proot-distro/installed-rootfs/debian/home/*)
 
-cp $HOME/.App-Installer/wine.sh ../usr/var/lib/proot-distro/installed-rootfs/debian/home/$varname
+cp $HOME/.App-Installer/wine.sh $HOME../usr/var/lib/proot-distro/installed-rootfs/debian/home/$varname
 proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 ./wine.sh
 
 
