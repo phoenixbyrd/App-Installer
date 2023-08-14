@@ -34,5 +34,5 @@ StartupNotify=true" > $HOME/Desktop/wine64.desktop
 chmod +x $HOME/Desktop/wine64.desktop
 cp $HOME/Desktop/wine64.desktop $HOME/../usr/share/applications
 
-
+proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 rm wine.sh
 
