@@ -25,7 +25,7 @@ librewolf_desktop="$HOME/../usr/share/applications/librewolf.desktop"
 unciv_desktop="$HOME/../usr/share/applications/unciv.desktop"
 diablo_desktop="$HOME/../usr/share/applications/diablo.desktop"
 element_desktop="$HOME/../usr/share/applications/element.desktop"
-
+prism_desktop="$HOME/../usr/share/applications/prism.desktop"
 
 check_freetube_installed() {
     if [ -e "$freetube_desktop" ]; then
@@ -172,6 +172,14 @@ check_element_installed() {
     fi
 }
 
+check_prism_installed() {
+    if [ -e "$prism_desktop" ]; then
+        echo "Installed"
+    else
+        echo "Not Installed"
+    fi
+}
+
 install_freetube() {
     "$script_dir/install_freetube.sh"
     zenity --info --title="Installation Complete" --text="FreeTube has been installed successfully."
@@ -260,6 +268,11 @@ install_diablo() {
 install_element() {
     "$script_dir/install_element.sh"
     zenity --info --title="Installation Complete" --text="Element has been installed successfully."
+}
+
+install_prism() {
+    "$script_dir/install_prismlauncher.sh"
+    zenity --info --title="Installation Complete" --text="Prism Launcher has been installed successfully."
 }
 
 remove_freetube() {
@@ -467,6 +480,18 @@ remove_element() {
     fi
 }
 
+remove_prism() {
+    if [ -e "$prism_desktop" ]; then
+        proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 sudo apt remove prismlauncher -y
+        proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 sudo apt autoremove -y
+        rm "$HOME/Desktop/prism.desktop"
+        rm "$element_desktop"
+        zenity --info --title="Removal Complete" --text="Prism Launcher has been removed successfully."
+    else
+        zenity --error --title="Removal Error" --text="Prism Launcher is not installed."
+    fi
+}
+
 while true; do
     # Determine the installation status of each app
     freetube_status=$(check_freetube_installed)
@@ -487,6 +512,7 @@ while true; do
     unciv_status=$(check_unciv_installed)
     diablo_status=$(check_diablo_installed)
     element_status=$(check_element_installed)
+    prism_status=$(check_prism_installed)
 
     # Define the actions based on the installation status
     if [ "$freetube_status" == "Installed" ]; then
@@ -633,6 +659,14 @@ while true; do
         element_description="A secure communications platform "
     fi
 
+    if [ "$prism_status" == "Installed" ]; then
+        prism_action="Remove Prism Launcher (Status: Installed)"
+        prism_description="A free all-in-one modpack available on all versions of Minecraft "
+    else
+        prism_action="Install Prism Launcher (Status: Not Installed)"
+        prism_description="A free all-in-one modpack available on all versions of Minecraft "
+    fi
+
     # Set the dark GTK theme
     export GTK_THEME=Adwaita:dark
 
@@ -659,6 +693,7 @@ choice=$(zenity --list --radiolist \
     FALSE "$unciv_action" "$unciv_description" \
     FALSE "$diablo_action" "$diablo_description" \
     FALSE "$element_action" "$element_description" \
+    FALSE "$prism_action" "$prism_description" \
     SEPARATOR \
     --width=850 --height=450)
 
@@ -793,6 +828,13 @@ choice=$(zenity --list --radiolist \
                 remove_element
             else
                 install_element
+            fi
+            ;;   
+        "$prism_action")
+            if [ "$prism_status" == "Installed" ]; then
+                remove_prism
+            else
+                install_prism
             fi
             ;;   
         *)
