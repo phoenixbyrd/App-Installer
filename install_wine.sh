@@ -6,7 +6,7 @@ cp $HOME/.App-Installer/wine.sh $HOME/../usr/var/lib/proot-distro/installed-root
 proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 ./wine.sh
 
 
-echo '[Desktop Entry]
+echo "[Desktop Entry]
 Version=1.0
 Type=Application
 Name=Wine 32 Desktop
@@ -16,11 +16,11 @@ Icon=windows95
 Categories=Game;
 Path=
 Terminal=false
-StartupNotify=true' > $HOME/Desktop/wine32.desktop
+StartupNotify=true" > $HOME/Desktop/wine32.desktop
 chmod +x $HOME/Desktop/wine32.desktop
 cp $HOME/Desktop/wine32.desktop $HOME/../usr/share/applications
 
-echo '[Desktop Entry]
+echo "[Desktop Entry]
 Version=1.0
 Type=Application
 Name=Wine 64 Desktop
@@ -30,7 +30,7 @@ Icon=windows95
 Categories=Game;
 Path=
 Terminal=false
-StartupNotify=true' > $HOME/Desktop/wine64.desktop
+StartupNotify=true" > $HOME/Desktop/wine64.desktop
 chmod +x $HOME/Desktop/wine64.desktop
 cp $HOME/Desktop/wine64.desktop $HOME/../usr/share/applications
 
