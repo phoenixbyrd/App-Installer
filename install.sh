@@ -292,7 +292,7 @@ install_wine() {
 
 remove_freetube() {
     if [ -e "$freetube_desktop" ]; then
-        proot-distro login debian --user phoenixbyrd --shared-tmp -- env DISPLAY=:1.0 sudo -S apt remove freetube
+        proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 sudo -S apt remove freetube
         rm "$HOME/Desktop/freetube.desktop"
         rm "$freetube_desktop"
         zenity --info --title="Removal Complete" --text="FreeTube has been removed successfully."
@@ -303,7 +303,7 @@ remove_freetube() {
 
 remove_tor_browser() {
     if [ -e "$tor_desktop" ]; then
-        proot-distro login debian --user phoenixbyrd --shared-tmp -- env DISPLAY=:1.0 rm -rf tor-browser
+        proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 rm -rf tor-browser
         rm "$HOME/Desktop/tor.desktop"
         rm "$tor_desktop"
         zenity --info --title="Removal Complete" --text="Tor Browser has been removed successfully."
@@ -314,7 +314,7 @@ remove_tor_browser() {
 
 remove_webcord() {
     if [ -e "$webcord_desktop" ]; then
-        proot-distro login debian --user phoenixbyrd --shared-tmp -- env DISPLAY=:1.0 sudo -S apt remove webcord
+        proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 sudo -S apt remove webcord
         rm "$HOME/Desktop/webcord.desktop"
         rm "$webcord_desktop"
         zenity --info --title="Removal Complete" --text="Webcord has been removed successfully."
