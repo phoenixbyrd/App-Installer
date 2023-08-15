@@ -12,7 +12,7 @@ Version=1.0
 Type=Application
 Name=Prism Launcher
 Comment=free all-in-one modpack available on all versions of Minecraft 
-Exec=proot-distro login debian --user phoenixbyrd --shared-tmp -- env DISPLAY=:1.0 GALLIUM_DRIVER=virpipe MESA_GL_VERSION_OVERRIDE=3.0 prismlauncher
+Exec=proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 GALLIUM_DRIVER=virpipe MESA_GL_VERSION_OVERRIDE=3.0 prismlauncher
 Icon=/data/data/com.termux/files/usr/var/lib/proot-distro/installed-rootfs/debian/usr/share/icons/hicolor/scalable/apps/org.prismlauncher.PrismLauncher.svg
 Categories=Game;
 Path=
