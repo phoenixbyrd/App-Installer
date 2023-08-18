@@ -27,6 +27,7 @@ diablo_desktop="$HOME/../usr/share/applications/diablo.desktop"
 element_desktop="$HOME/../usr/share/applications/element.desktop"
 prism_desktop="$HOME/../usr/share/applications/prism.desktop"
 wine_desktop="$HOME/../usr/share/applications/wine32.desktop"
+runelite_desktop="$HOME/../usr/share/applications/runelite.desktop"
 
 check_freetube_installed() {
     if [ -e "$freetube_desktop" ]; then
@@ -189,6 +190,14 @@ check_wine_installed() {
     fi
 }
 
+check_runelite_installed() {
+    if [ -e "$runelite_desktop" ]; then
+        echo "Installed"
+    else
+        echo "Not Installed"
+    fi
+}
+
 
 install_freetube() {
     "$script_dir/install_freetube.sh"
@@ -288,6 +297,12 @@ install_prism() {
 install_wine() {
     "$script_dir/install_wine.sh"
     zenity --info --title="Installation Complete" --text="Box86, Box64 and Wine has been installed successfully."
+}
+
+
+install_runelite() {
+    "$script_dir/install_runelite.sh"
+    zenity --info --title="Installation Complete" --text="RuneLite has been installed successfully."
 }
 
 remove_freetube() {
@@ -523,6 +538,17 @@ remove_wine() {
     fi
 }
 
+remove_runelite() {
+    if [ -e "$runelite_desktop" ]; then
+        proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 rm -rf /opt/RuneLite
+        rm "$HOME/Desktop/runelite.desktop"
+        rm "$runelite_desktop"
+        zenity --info --title="Removal Complete" --text="RuneLite has been removed successfully."
+    else
+        zenity --error --title="Removal Error" --text="RuneLite is not installed."
+    fi
+}
+
 while true; do
     # Determine the installation status of each app
     freetube_status=$(check_freetube_installed)
@@ -545,6 +571,7 @@ while true; do
     element_status=$(check_element_installed)
     prism_status=$(check_prism_installed)
     wine_status=$(check_wine_installed)
+    runelite_status=$(check_runelite_installed)
 
     # Define the actions based on the installation status
     if [ "$freetube_status" == "Installed" ]; then
@@ -707,6 +734,14 @@ while true; do
         wine_description="lets you run x86_64 Linux and Windows programs"
     fi
 
+    if [ "$runelite_status" == "Installed" ]; then
+        runelite_action="Remove RuneLite (Status: Installed)"
+        runelite_description="Old School RuneScape Client"
+    else
+        runelite_action="Install RuneLite (Status: Not Installed)"
+        runelite_description="Old School RuneScape Client"
+    fi
+
     # Set the dark GTK theme
     export GTK_THEME=Adwaita:dark
 
@@ -735,6 +770,7 @@ choice=$(zenity --list --radiolist \
     FALSE "$element_action" "$element_description" \
     FALSE "$prism_action" "$prism_description" \
     FALSE "$wine_action" "$wine_description" \
+    FALSE "$runelite_action" "$runelite_description" \
     SEPARATOR \
     --width=875 --height=450)
 
@@ -883,6 +919,13 @@ choice=$(zenity --list --radiolist \
                 remove_wine
             else
                 install_wine
+            fi
+            ;;   
+        "$runelite_action")
+            if [ "$runelite_status" == "Installed" ]; then
+                remove_runelite
+            else
+                install_runelite
             fi
             ;;   
         *)
