@@ -7,7 +7,7 @@ proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 mv br
 proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 wget https://github.com/phoenixbyrd/App-Installer/raw/main/brave-browser-release.list
 proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 mv brave-browser-release.list /etc/apt/sources.list.d
 proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 sudo apt update
-proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 sudo apt install brave-browser
+proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 sudo apt install brave-browser -y
 
 echo "[Desktop Entry]
 Version=1.0
