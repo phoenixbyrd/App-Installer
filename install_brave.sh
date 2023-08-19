@@ -2,8 +2,8 @@
 
 varname=$(basename $HOME/../usr/var/lib/proot-distro/installed-rootfs/debian/home/*)
 
-proot-distro login debian --shared-tmp -- env DISPLAY=:1.0 wget https://github.com/brave/brave-browser/releases/download/v1.59.28/brave-browser-nightly_1.59.28_arm64.deb
-proot-distro login debian --shared-tmp -- env DISPLAY=:1.0 sudo apt update && proot-distro login debian --shared-tmp -- env DISPLAY=:1.0 sudo apt install ./brave-browser-nightly_1.59.28_arm64.deb
+proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 wget https://github.com/brave/brave-browser/releases/download/v1.59.28/brave-browser-nightly_1.59.28_arm64.deb
+proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 sudo apt install ./brave-browser-nightly_1.59.28_arm64.deb
 
 echo "[Desktop Entry]
 Version=1.0
