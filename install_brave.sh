@@ -4,7 +4,7 @@ varname=$(basename $HOME/../usr/var/lib/proot-distro/installed-rootfs/debian/hom
 
 proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 wget https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg
 proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 mv brave-browser-archive-keyring.gpg /usr/share/keyrings
-proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0  echo "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg] https://brave-browser-apt-release.s3.brave.com/ stable main" > /etc/apt/sources.list.d/brave-browser-release.list
+proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 echo "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg] https://brave-browser-apt-release.s3.brave.com/ stable main" > /etc/apt/sources.list.d/brave-browser-release.list
 proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 sudo apt update
 proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 sudo apt install brave-browser
 
