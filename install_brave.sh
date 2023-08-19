@@ -12,7 +12,7 @@ proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 sudo 
 echo "[Desktop Entry]
 Version=1.0
 Name=Brave Web Browser
-Exec=proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 /usr/bin/brave-browser-stable %U --no-sandbox
+Exec=proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 GALLIUM_DRIVER=virpipe MESA_GL_VERSION_OVERRIDE=3.0 /usr/bin/brave-browser-stable %U --no-sandbox
 StartupNotify=true
 Terminal=false
 Icon=brave-browser
