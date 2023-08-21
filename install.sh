@@ -567,7 +567,7 @@ remove_runelite() {
 
 remove_simplenote() {
     if [ -e "$simplenote_desktop" ]; then
-        "$script_dir/install_simplenote.sh --uninstall"
+        "$script_dir/install_simplenote.sh" --uninstall
         zenity --info --title="Removal Complete" --text="SimpleNote has been removed successfully."
     else
         zenity --error --title="Removal Error" --text="SimpleNote is not installed."
