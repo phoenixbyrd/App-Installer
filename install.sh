@@ -28,6 +28,7 @@ element_desktop="$HOME/../usr/share/applications/element.desktop"
 prism_desktop="$HOME/../usr/share/applications/prism.desktop"
 wine_desktop="$HOME/../usr/share/applications/wine32.desktop"
 runelite_desktop="$HOME/../usr/share/applications/runelite.desktop"
+simplenote_desktop="$HOME/../usr/share/applications/SimpleNote.desktop"
 
 check_freetube_installed() {
     if [ -e "$freetube_desktop" ]; then
@@ -198,6 +199,14 @@ check_runelite_installed() {
     fi
 }
 
+check_simplenote_installed() {
+    if [ -e "$simplenote_desktop" ]; then
+        echo "Installed"
+    else
+        echo "Not Installed"
+    fi
+}
+
 
 install_freetube() {
     "$script_dir/install_freetube.sh"
@@ -304,6 +313,12 @@ install_runelite() {
     "$script_dir/install_runelite.sh"
     zenity --info --title="Installation Complete" --text="RuneLite has been installed successfully."
 }
+
+install_simplenote() {
+    "$script_dir/install_simplenote.sh --install"
+    zenity --info --title="Installation Complete" --text="SimpleNote has been installed successfully."
+}
+
 
 remove_freetube() {
     if [ -e "$freetube_desktop" ]; then
@@ -550,6 +565,15 @@ remove_runelite() {
     fi
 }
 
+remove_runelite() {
+    if [ -e "$runelite_desktop" ]; then
+        "$script_dir/install_simplenote.sh --uninstall"
+        zenity --info --title="Removal Complete" --text="SimpleNote has been removed successfully."
+    else
+        zenity --error --title="Removal Error" --text="SimpleNote is not installed."
+    fi
+}
+
 while true; do
     # Determine the installation status of each app
     freetube_status=$(check_freetube_installed)
@@ -573,6 +597,7 @@ while true; do
     prism_status=$(check_prism_installed)
     wine_status=$(check_wine_installed)
     runelite_status=$(check_runelite_installed)
+    simplenote_status=$(check_simplenote_installed)
 
     # Define the actions based on the installation status
     if [ "$freetube_status" == "Installed" ]; then
@@ -743,6 +768,14 @@ while true; do
         runelite_description="Old School RuneScape Client"
     fi
 
+    if [ "$simplenote_status" == "Installed" ]; then
+        simplenote_action="Remove SimpleNote (Status: Installed)"
+        simplenote_description="All your notes, synced on all your devices."
+    else
+        simplenote_action="Install SimpleNote (Status: Not Installed)"
+        simplenote_description="All your notes, synced on all your devices."
+    fi
+
     # Set the dark GTK theme
     export GTK_THEME=Adwaita:dark
 
@@ -772,6 +805,7 @@ choice=$(zenity --list --radiolist \
     FALSE "$prism_action" "$prism_description" \
     FALSE "$wine_action" "$wine_description" \
     FALSE "$runelite_action" "$runelite_description" \
+    FALSE "$simplenote_action" "$simplenote_description" \
     SEPARATOR \
     --width=875 --height=450)
 
@@ -927,6 +961,13 @@ choice=$(zenity --list --radiolist \
                 remove_runelite
             else
                 install_runelite
+            fi
+            ;;   
+        "$simplenote_action")
+            if [ "$simplenote_status" == "Installed" ]; then
+                remove_simplenote
+            else
+                install_simplenote
             fi
             ;;   
         *)
