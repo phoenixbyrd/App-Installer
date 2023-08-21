@@ -29,7 +29,7 @@ prism_desktop="$HOME/../usr/share/applications/prism.desktop"
 wine_desktop="$HOME/../usr/share/applications/wine32.desktop"
 runelite_desktop="$HOME/../usr/share/applications/runelite.desktop"
 simplenote_desktop="$HOME/../usr/share/applications/SimpleNote.desktop"
-1password_desktop="$HOME/../usr/share/applications/1password.desktop"
+onepassword_desktop="$HOME/../usr/share/applications/1password.desktop"
 
 
 check_freetube_installed() {
@@ -209,8 +209,8 @@ check_simplenote_installed() {
     fi
 }
 
-check_1password_installed() {
-    if [ -e "$1password_desktop" ]; then
+check_onepassword_installed() {
+    if [ -e "$onepassword_desktop" ]; then
         echo "Installed"
     else
         echo "Not Installed"
@@ -329,7 +329,7 @@ install_simplenote() {
     zenity --info --title="Installation Complete" --text="SimpleNote has been installed successfully."
 }
 
-install_1password() {
+install_onepassword() {
     "$script_dir/install_1password.sh" --install
     zenity --info --title="Installation Complete" --text="1password has been installed successfully."
 }
@@ -589,8 +589,8 @@ remove_simplenote() {
     fi
 }
 
-remove_1password() {
-    if [ -e "$1password_desktop" ]; then
+remove_onepassword() {
+    if [ -e "$onepassword_desktop" ]; then
         "$script_dir/install_1password.sh" --uninstall
         zenity --info --title="Removal Complete" --text="1password has been removed successfully."
     else
@@ -622,7 +622,7 @@ while true; do
     wine_status=$(check_wine_installed)
     runelite_status=$(check_runelite_installed)
     simplenote_status=$(check_simplenote_installed)
-    1password_status=$(check_1password_installed)
+    onepassword_status=$(check_onepassword_installed)
 
     # Define the actions based on the installation status
     if [ "$freetube_status" == "Installed" ]; then
@@ -801,12 +801,12 @@ while true; do
         simplenote_description="All your notes, synced on all your devices."
     fi
 
-    if [ "$1password_status" == "Installed" ]; then
-        1password_action="Remove 1password (Status: Installed)"
-        1password_description="Go ahead. Forget your passwords."
+    if [ "$onepassword_status" == "Installed" ]; then
+        onepassword_action="Remove 1password (Status: Installed)"
+        onepassword_description="Go ahead. Forget your passwords."
     else
-        1password_action="Install 1password (Status: Not Installed)"
-        1password_description="Go ahead. Forget your passwords."
+        onepassword_action="Install 1password (Status: Not Installed)"
+        onepassword_description="Go ahead. Forget your passwords."
     fi
 
     # Set the dark GTK theme
@@ -839,7 +839,7 @@ choice=$(zenity --list --radiolist \
     FALSE "$wine_action" "$wine_description" \
     FALSE "$runelite_action" "$runelite_description" \
     FALSE "$simplenote_action" "$simplenote_description" \
-    FALSE "$1password_action" "$1password_description" \
+    FALSE "$onepassword_action" "$onepassword_description" \
     SEPARATOR \
     --width=875 --height=450)
 
@@ -1004,11 +1004,11 @@ choice=$(zenity --list --radiolist \
                 install_simplenote
             fi
             ;;   
-        "$1password_action")
-            if [ "$1password_status" == "Installed" ]; then
-                remove_1password
+        "$onepassword_action")
+            if [ "$onepassword_status" == "Installed" ]; then
+                remove_onepassword
             else
-                install_1password
+                install_onepassword
             fi
             ;;   
         *)
