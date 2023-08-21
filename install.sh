@@ -353,6 +353,7 @@ remove_vivaldi() {
 remove_brave() {
     if [ -e "$brave_desktop" ]; then
         proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 sudo -S apt remove brave-browser -y
+        proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 rm /etc/apt/sources.list.d/brave-browser-release.list
         rm "$HOME/Desktop/brave.desktop"
         rm "$brave_desktop"
         zenity --info --title="Removal Complete" --text="Brave has been removed successfully."
