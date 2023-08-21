@@ -315,7 +315,7 @@ install_runelite() {
 }
 
 install_simplenote() {
-    "$script_dir/install_simplenote.sh --install"
+    "$script_dir/install_simplenote.sh" --install
     zenity --info --title="Installation Complete" --text="SimpleNote has been installed successfully."
 }
 
@@ -565,8 +565,8 @@ remove_runelite() {
     fi
 }
 
-remove_runelite() {
-    if [ -e "$runelite_desktop" ]; then
+remove_simplenote() {
+    if [ -e "$simplenote_desktop" ]; then
         "$script_dir/install_simplenote.sh --uninstall"
         zenity --info --title="Removal Complete" --text="SimpleNote has been removed successfully."
     else
