@@ -40,6 +40,7 @@ if [ "$install" = true ]; then
     $prun $download
     $prun chmod +x ${url##*/}
     $prun ./$extract
+    $prun rm ${url##*/}
     $prun mv squashfs-root $dir
 
     installed_dir="$HOME/../usr/var/lib/proot-distro/installed-rootfs/debian/$dir"
