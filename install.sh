@@ -771,10 +771,10 @@ while true; do
 
     if [ "$prism_status" == "Installed" ]; then
         prism_action="Remove Prism Launcher (Status: Installed)"
-        prism_description="A free all-in-one modpack available on all versions of Minecraft "
+        prism_description="An Open Source Minecraft launcher"
     else
         prism_action="Install Prism Launcher (Status: Not Installed)"
-        prism_description="A free all-in-one modpack available on all versions of Minecraft "
+        prism_description="An Open Source Minecraft launcher"
     fi
 
     if [ "$wine_status" == "Installed" ]; then
@@ -841,7 +841,7 @@ choice=$(zenity --list --radiolist \
     FALSE "$simplenote_action" "$simplenote_description" \
     FALSE "$onepassword_action" "$onepassword_description" \
     SEPARATOR \
-    --width=1000 --height=600)
+    --width=800 --height=450)
 
     # Check if the user canceled the selection
     if [ -z "$choice" ]; then
