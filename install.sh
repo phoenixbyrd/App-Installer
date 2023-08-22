@@ -841,7 +841,7 @@ choice=$(zenity --list --radiolist \
     FALSE "$simplenote_action" "$simplenote_description" \
     FALSE "$onepassword_action" "$onepassword_description" \
     SEPARATOR \
-    --width=1000 --height=500)
+    --width=900 --height=500)
 
     # Check if the user canceled the selection
     if [ -z "$choice" ]; then
