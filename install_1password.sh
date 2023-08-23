@@ -9,6 +9,11 @@ url="https://downloads.1password.com/linux/tar/stable/aarch64/1password-latest.t
 appname="1password"
 #Enter path to icon or system icon name
 icon_path="1password"
+#Enter Categories for .desktop
+category="System"
+#Enter any dependencies
+depends=""
+
 
 #Do not edit below here unless required
 # Process command line arguments
@@ -63,7 +68,7 @@ Name=$appname
 Comment=Web Browser
 Exec=prun $installed_dir/$alt_binary $sandboxed
 Icon=$icon_path
-Categories=System;
+Categories=$category
 Terminal=false
 EOL
 
