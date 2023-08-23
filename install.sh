@@ -30,6 +30,8 @@ wine_desktop="$HOME/../usr/share/applications/wine32.desktop"
 runelite_desktop="$HOME/../usr/share/applications/runelite.desktop"
 simplenote_desktop="$HOME/../usr/share/applications/SimpleNote.desktop"
 onepassword_desktop="$HOME/../usr/share/applications/1password.desktop"
+lagrange_desktop="$HOME/../usr/share/applications/lagrange.desktop"
+
 
 
 check_freetube_installed() {
@@ -217,6 +219,14 @@ check_onepassword_installed() {
     fi
 }
 
+check_lagrange_installed() {
+    if [ -e "$lagrange_desktop" ]; then
+        echo "Installed"
+    else
+        echo "Not Installed"
+    fi
+}
+
 
 install_freetube() {
     "$script_dir/install_freetube.sh"
@@ -333,6 +343,12 @@ install_onepassword() {
     "$script_dir/install_1password.sh" --install
     zenity --info --title="Installation Complete" --text="1password has been installed successfully."
 }
+
+install_lagrange() {
+    "$script_dir/install_lagrange.sh" --install
+    zenity --info --title="Installation Complete" --text="lagrange has been installed successfully."
+}
+
 
 
 remove_freetube() {
@@ -598,6 +614,15 @@ remove_onepassword() {
     fi
 }
 
+remove_lagrange() {
+    if [ -e "$lagrange_desktop" ]; then
+        "$script_dir/install_lagrange.sh" --uninstall
+        zenity --info --title="Removal Complete" --text="lagrange has been removed successfully."
+    else
+        zenity --error --title="Removal Error" --text="lagrange is not installed."
+    fi
+}
+
 while true; do
     # Determine the installation status of each app
     freetube_status=$(check_freetube_installed)
@@ -623,6 +648,7 @@ while true; do
     runelite_status=$(check_runelite_installed)
     simplenote_status=$(check_simplenote_installed)
     onepassword_status=$(check_onepassword_installed)
+    lagrange_status=$(check_lagrange_installed)
 
     # Define the actions based on the installation status
     if [ "$freetube_status" == "Installed" ]; then
@@ -809,6 +835,14 @@ while true; do
         onepassword_description="Go ahead. Forget your passwords."
     fi
 
+    if [ "$lagrange_status" == "Installed" ]; then
+        lagrange_action="Remove lagrange (Status: Installed)"
+        lagrange_description="A Beautiful Gemini Client"
+    else
+        lagrange_action="Install lagrange (Status: Not Installed)"
+        lagrange_description="A Beautiful Gemini Client"
+    fi
+
     # Set the dark GTK theme
     export GTK_THEME=Adwaita:dark
 
@@ -840,6 +874,7 @@ choice=$(zenity --list --radiolist \
     FALSE "$runelite_action" "$runelite_description" \
     FALSE "$simplenote_action" "$simplenote_description" \
     FALSE "$onepassword_action" "$onepassword_description" \
+    FALSE "$lagrange_action" "$lagrange_description" \
     SEPARATOR \
     --width=900 --height=500)
 
@@ -1009,6 +1044,13 @@ choice=$(zenity --list --radiolist \
                 remove_onepassword
             else
                 install_onepassword
+            fi
+            ;;   
+        "$lagrange_action")
+            if [ "$lagrange_status" == "Installed" ]; then
+                remove_lagrange
+            else
+                install_lagrange
             fi
             ;;   
         *)
