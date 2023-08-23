@@ -31,8 +31,7 @@ runelite_desktop="$HOME/../usr/share/applications/runelite.desktop"
 simplenote_desktop="$HOME/../usr/share/applications/SimpleNote.desktop"
 onepassword_desktop="$HOME/../usr/share/applications/1password.desktop"
 lagrange_desktop="$HOME/../usr/share/applications/lagrange.desktop"
-
-
+nicotine_desktop="$HOME/../usr/share/applications/nicotine.desktop"
 
 check_freetube_installed() {
     if [ -e "$freetube_desktop" ]; then
@@ -227,6 +226,13 @@ check_lagrange_installed() {
     fi
 }
 
+check_nicotine_installed() {
+    if [ -e "$nicotine_desktop" ]; then
+        echo "Installed"
+    else
+        echo "Not Installed"
+    fi
+}
 
 install_freetube() {
     "$script_dir/install_freetube.sh"
@@ -349,7 +355,10 @@ install_lagrange() {
     zenity --info --title="Installation Complete" --text="lagrange has been installed successfully."
 }
 
-
+install_nicotine() {
+    "$script_dir/install_nicotine.sh" --install
+    zenity --info --title="Installation Complete" --text="Nicotine+ has been installed successfully."
+}
 
 remove_freetube() {
     if [ -e "$freetube_desktop" ]; then
@@ -623,6 +632,15 @@ remove_lagrange() {
     fi
 }
 
+remove_nicotine() {
+    if [ -e "$nicotine_desktop" ]; then
+        "$script_dir/install_nicotine.sh" --uninstall
+        zenity --info --title="Removal Complete" --text="Nicotine+ has been removed successfully."
+    else
+        zenity --error --title="Removal Error" --text="Nicotine+ is not installed."
+    fi
+}
+
 while true; do
     # Determine the installation status of each app
     freetube_status=$(check_freetube_installed)
@@ -649,6 +667,7 @@ while true; do
     simplenote_status=$(check_simplenote_installed)
     onepassword_status=$(check_onepassword_installed)
     lagrange_status=$(check_lagrange_installed)
+    nicotine_status=$(check_nicotine_installed)
 
     # Define the actions based on the installation status
     if [ "$freetube_status" == "Installed" ]; then
@@ -843,6 +862,14 @@ while true; do
         lagrange_description="A Beautiful Gemini Client"
     fi
 
+    if [ "$nicotine_status" == "Installed" ]; then
+        nicotine_action="Remove Nicotine+ (Status: Installed)"
+        nicotine_description="A client for the Soulseek peer-to-peer network"
+    else
+        nicotine_action="Install Nicotine+ (Status: Not Installed)"
+        nicotine_description="A client for the Soulseek peer-to-peer network"
+    fi
+
     # Set the dark GTK theme
     export GTK_THEME=Adwaita:dark
 
@@ -875,6 +902,7 @@ choice=$(zenity --list --radiolist \
     FALSE "$simplenote_action" "$simplenote_description" \
     FALSE "$onepassword_action" "$onepassword_description" \
     FALSE "$lagrange_action" "$lagrange_description" \
+    FALSE "$nicotine_action" "$nicotine_description" \
     SEPARATOR \
     --width=900 --height=500)
 
@@ -1052,7 +1080,14 @@ choice=$(zenity --list --radiolist \
             else
                 install_lagrange
             fi
-            ;;   
+            ;;
+        "$nicotine_action")
+            if [ "$nicotine_status" == "Installed" ]; then
+                remove_nicotine
+            else
+                install_nicotine
+            fi
+            ;;
         *)
             zenity --error --title="Error" --text="Invalid choice."
             ;;
