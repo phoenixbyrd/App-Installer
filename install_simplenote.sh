@@ -9,6 +9,10 @@ url="https://github.com/Automattic/simplenote-electron/releases/download/v2.21.0
 appname="SimpleNote"
 #Enter path to icon or system icon name
 icon_path="simplenote"
+#Enter Categories for .desktop
+category="Network"
+#Enter any dependencies
+depends="zlib1g-dev"
 
 #Do not edit below here unless required
 # Process command line arguments
@@ -33,10 +37,12 @@ if [ "$install" = true ]; then
     download="wget $url"
     extract="${url##*/} --appimage-extract"
     dir="/opt/$appname"
+    install="prun sudo apt install "
 
     varname=$(basename $HOME/../usr/var/lib/proot-distro/installed-rootfs/debian/home/*)
     prun="proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 $@"
 
+    $install $depends  
     $prun $download
     $prun chmod +x ${url##*/}
     $prun ./$extract
@@ -62,6 +68,7 @@ Name=$appname
 Comment=Web Browser
 Exec=prun $alt_binary $sandboxed
 Icon=$icon_path
+Categories=$category
 Terminal=false
 EOL
 
