@@ -33,6 +33,7 @@ onepassword_desktop="$HOME/../usr/share/applications/1password.desktop"
 lagrange_desktop="$HOME/../usr/share/applications/lagrange.desktop"
 nicotine_desktop="$HOME/../usr/share/applications/nicotine.desktop"
 vieb_desktop="$HOME/../usr/share/applications/vieb.desktop"
+zettlr_desktop="$HOME/../usr/share/applications/zettlr.desktop"
 
 check_freetube_installed() {
     if [ -e "$freetube_desktop" ]; then
@@ -243,6 +244,14 @@ check_vieb_installed() {
     fi
 }
 
+check_zettlr_installed() {
+    if [ -e "$zettlr_desktop" ]; then
+        echo "Installed"
+    else
+        echo "Not Installed"
+    fi
+}
+
 install_freetube() {
     "$script_dir/install_freetube.sh"
     zenity --info --title="Installation Complete" --text="FreeTube has been installed successfully."
@@ -372,6 +381,11 @@ install_nicotine() {
 install_vieb() {
     "$script_dir/install_vieb.sh" --install
     zenity --info --title="Installation Complete" --text="Vieb has been installed successfully."
+}
+
+install_zettlr() {
+    "$script_dir/install_zettlr.sh" --install
+    zenity --info --title="Installation Complete" --text="Zettlr has been installed successfully."
 }
 
 remove_freetube() {
@@ -664,6 +678,15 @@ remove_vieb() {
     fi
 }
 
+remove_zettlr() {
+    if [ -e "$zettlr_desktop" ]; then
+        "$script_dir/install_zettlr.sh" --uninstall
+        zenity --info --title="Removal Complete" --text="Zettlr has been removed successfully."
+    else
+        zenity --error --title="Removal Error" --text="Zettlr is not installed."
+    fi
+}
+
 while true; do
     # Determine the installation status of each app
     freetube_status=$(check_freetube_installed)
@@ -692,6 +715,7 @@ while true; do
     lagrange_status=$(check_lagrange_installed)
     nicotine_status=$(check_nicotine_installed)
     vieb_status=$(check_vieb_installed)
+    zettlr_status=$(check_zettlr_installed)
 
     # Define the actions based on the installation status
     if [ "$freetube_status" == "Installed" ]; then
@@ -902,6 +926,14 @@ while true; do
         vieb_description="Vim bindings for the web by design"
     fi
 
+    if [ "$zettlr_status" == "Installed" ]; then
+        zettlr_action="Remove Zettlr (Status: Installed)"
+        zettlr_description="A Markdown editor for the 21st century"
+    else
+        zettlr_action="Install Zettlr (Status: Not Installed)"
+        zettlr_description="A Markdown editor for the 21st century"
+    fi
+
     # Set the dark GTK theme
     export GTK_THEME=Adwaita:dark
 
@@ -936,6 +968,7 @@ choice=$(zenity --list --radiolist \
     FALSE "$lagrange_action" "$lagrange_description" \
     FALSE "$nicotine_action" "$nicotine_description" \
     FALSE "$vieb_action" "$vieb_description" \
+    FALSE "$zettlr_action" "$zettlr_description" \
     SEPARATOR \
     --width=900 --height=500)
 
@@ -1126,6 +1159,13 @@ choice=$(zenity --list --radiolist \
                 remove_vieb
             else
                 install_vieb
+            fi
+            ;;
+            "$zettlr_action")
+            if [ "$zettlr_status" == "Installed" ]; then
+                remove_zettlr
+            else
+                install_zettlr
             fi
             ;;
         *)
