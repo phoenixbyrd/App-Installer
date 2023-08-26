@@ -32,6 +32,7 @@ simplenote_desktop="$HOME/../usr/share/applications/SimpleNote.desktop"
 onepassword_desktop="$HOME/../usr/share/applications/1password.desktop"
 lagrange_desktop="$HOME/../usr/share/applications/lagrange.desktop"
 nicotine_desktop="$HOME/../usr/share/applications/nicotine.desktop"
+vieb_desktop="$HOME/../usr/share/applications/vieb.desktop"
 
 check_freetube_installed() {
     if [ -e "$freetube_desktop" ]; then
@@ -234,6 +235,14 @@ check_nicotine_installed() {
     fi
 }
 
+check_vieb_installed() {
+    if [ -e "$vieb_desktop" ]; then
+        echo "Installed"
+    else
+        echo "Not Installed"
+    fi
+}
+
 install_freetube() {
     "$script_dir/install_freetube.sh"
     zenity --info --title="Installation Complete" --text="FreeTube has been installed successfully."
@@ -358,6 +367,11 @@ install_lagrange() {
 install_nicotine() {
     "$script_dir/install_nicotine.sh" --install
     zenity --info --title="Installation Complete" --text="Nicotine+ has been installed successfully."
+}
+
+install_vieb() {
+    "$script_dir/install_vieb.sh" --install
+    zenity --info --title="Installation Complete" --text="Vieb has been installed successfully."
 }
 
 remove_freetube() {
@@ -641,6 +655,15 @@ remove_nicotine() {
     fi
 }
 
+remove_vieb() {
+    if [ -e "$vien_desktop" ]; then
+        "$script_dir/install_vieb.sh" --uninstall
+        zenity --info --title="Removal Complete" --text="Vieb has been removed successfully."
+    else
+        zenity --error --title="Removal Error" --text="Vieb is not installed."
+    fi
+}
+
 while true; do
     # Determine the installation status of each app
     freetube_status=$(check_freetube_installed)
@@ -668,6 +691,7 @@ while true; do
     onepassword_status=$(check_onepassword_installed)
     lagrange_status=$(check_lagrange_installed)
     nicotine_status=$(check_nicotine_installed)
+    vieb_status=$(check_vieb_installed)
 
     # Define the actions based on the installation status
     if [ "$freetube_status" == "Installed" ]; then
@@ -870,6 +894,14 @@ while true; do
         nicotine_description="A client for the Soulseek peer-to-peer network"
     fi
 
+    if [ "$vieb_status" == "Installed" ]; then
+        vieb_action="Remove Vieb (Status: Installed)"
+        vieb_description="Vim bindings for the web by design"
+    else
+        vieb_action="Install Vieb (Status: Not Installed)"
+        vieb_description="Vim bindings for the web by design"
+    fi
+
     # Set the dark GTK theme
     export GTK_THEME=Adwaita:dark
 
@@ -903,6 +935,7 @@ choice=$(zenity --list --radiolist \
     FALSE "$onepassword_action" "$onepassword_description" \
     FALSE "$lagrange_action" "$lagrange_description" \
     FALSE "$nicotine_action" "$nicotine_description" \
+    FALSE "$vieb_action" "$vieb_description" \
     SEPARATOR \
     --width=900 --height=500)
 
@@ -1086,6 +1119,13 @@ choice=$(zenity --list --radiolist \
                 remove_nicotine
             else
                 install_nicotine
+            fi
+            ;;
+        "$vieb_action")
+            if [ "$vieb_status" == "Installed" ]; then
+                remove_vieb
+            else
+                install_vieb
             fi
             ;;
         *)
