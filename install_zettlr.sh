@@ -75,9 +75,10 @@ echo "Installation completed."
 elif [ "$uninstall" = true ]; then
     echo "Uninstalling..."
     dir="/opt/$appname"
+    bin="/bin/$appname
     installed_dir="$HOME/../usr/var/lib/proot-distro/installed-rootfs/debian/$dir"
     rm -rf "$installed_dir"
-    rm -rf "$installed_dir/bin/$appname"
+    rm -rf "$installed_dir/$bin"
     desktop_file="$HOME/Desktop/$appname.desktop"
     rm "$desktop_file"
     rm "$HOME/../usr/share/applications/$appname.desktop"
