@@ -656,7 +656,7 @@ remove_nicotine() {
 }
 
 remove_vieb() {
-    if [ -e "$vien_desktop" ]; then
+    if [ -e "$vieb_desktop" ]; then
         "$script_dir/install_vieb.sh" --uninstall
         zenity --info --title="Removal Complete" --text="Vieb has been removed successfully."
     else
