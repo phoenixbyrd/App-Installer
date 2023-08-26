@@ -45,6 +45,7 @@ if [ "$install" = true ]; then
     $install $depends
     $install ./${url##*/}
     $prun rm ${url##*/}
+    dir="/opt/$appname"
 
     installed_dir="$HOME/../usr/var/lib/proot-distro/installed-rootfs/debian/$dir"
     desktop_file="$HOME/Desktop/$appname.desktop"
