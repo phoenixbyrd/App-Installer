@@ -45,6 +45,10 @@ if [ "$install" = true ]; then
     $install $depends
     $install ./${url##*/}
     $prun rm ${url##*/}
+    $prun curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.5/install.sh | bash
+    $prun source .bashrc
+    $prun nvm install node -y
+    $prun 
 
     installed_dir="$HOME/../usr/var/lib/proot-distro/installed-rootfs/debian/$dir"
     desktop_file="$HOME/Desktop/$appname.desktop"
