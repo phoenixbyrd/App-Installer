@@ -33,7 +33,7 @@ onepassword_desktop="$HOME/../usr/share/applications/1password.desktop"
 lagrange_desktop="$HOME/../usr/share/applications/lagrange.desktop"
 nicotine_desktop="$HOME/../usr/share/applications/nicotine.desktop"
 vieb_desktop="$HOME/../usr/share/applications/vieb.desktop"
-zettlr_desktop="$HOME/../usr/share/applications/zettlr.desktop"
+zettlr_desktop="$HOME/../usr/share/applications/Zettlr.desktop"
 
 check_freetube_installed() {
     if [ -e "$freetube_desktop" ]; then
