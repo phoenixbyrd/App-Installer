@@ -1001,6 +1001,7 @@ choice=$(zenity --list --radiolist \
     FALSE "$nicotine_action" "$nicotine_description" \
     FALSE "$vieb_action" "$vieb_description" \
     FALSE "$zettlr_action" "$zettlr_description" \
+    FALSE "$armcord_action" "$armcord_description" \
     SEPARATOR \
     --width=900 --height=500)
 
