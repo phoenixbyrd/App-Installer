@@ -34,7 +34,7 @@ lagrange_desktop="$HOME/../usr/share/applications/lagrange.desktop"
 nicotine_desktop="$HOME/../usr/share/applications/nicotine.desktop"
 vieb_desktop="$HOME/../usr/share/applications/vieb.desktop"
 zettlr_desktop="$HOME/../usr/share/applications/Zettlr.desktop"
-ferdium_desktop="$HOME/../usr/share/applications/ferdium.desktop"
+armcord_desktop="$HOME/../usr/share/applications/armcord.desktop"
 
 check_freetube_installed() {
     if [ -e "$freetube_desktop" ]; then
@@ -253,8 +253,8 @@ check_zettlr_installed() {
     fi
 }
 
-check_ferdium_installed() {
-    if [ -e "$ferdium_desktop" ]; then
+check_armcord_installed() {
+    if [ -e "$armcord_desktop" ]; then
         echo "Installed"
     else
         echo "Not Installed"
@@ -397,9 +397,9 @@ install_zettlr() {
     zenity --info --title="Installation Complete" --text="Zettlr has been installed successfully."
 }
 
-install_ferdium() {
-    "$script_dir/install_ferdium.sh" --install
-    zenity --info --title="Installation Complete" --text="Ferdium has been installed successfully."
+install_armcord() {
+    "$script_dir/install_armcord.sh" --install
+    zenity --info --title="Installation Complete" --text="armcord has been installed successfully."
 }
 
 remove_freetube() {
@@ -701,12 +701,12 @@ remove_zettlr() {
     fi
 }
 
-remove_ferdium() {
-    if [ -e "$ferdium_desktop" ]; then
-        "$script_dir/install_ferdium.sh" --uninstall
-        zenity --info --title="Removal Complete" --text="Ferdium has been removed successfully."
+remove_armcord() {
+    if [ -e "$armcord_desktop" ]; then
+        "$script_dir/install_armcord.sh" --uninstall
+        zenity --info --title="Removal Complete" --text="armcord has been removed successfully."
     else
-        zenity --error --title="Removal Error" --text="Ferdium is not installed."
+        zenity --error --title="Removal Error" --text="armcord is not installed."
     fi
 }
 
@@ -739,7 +739,7 @@ while true; do
     nicotine_status=$(check_nicotine_installed)
     vieb_status=$(check_vieb_installed)
     zettlr_status=$(check_zettlr_installed)
-    ferdium_status=$(check_ferdium_installed)
+    armcord_status=$(check_armcord_installed)
 
     # Define the actions based on the installation status
     if [ "$freetube_status" == "Installed" ]; then
@@ -958,12 +958,12 @@ while true; do
         zettlr_description="A Markdown editor for the 21st century"
     fi
 
-    if [ "$ferdium_status" == "Installed" ]; then
-        ferdium_action="Remove Ferdium (Status: Installed)"
-        ferdium_description="All your services in one place"
+    if [ "$armcord_status" == "Installed" ]; then
+        armcord_action="Remove armcord (Status: Installed)"
+        armcord_description="A custom themable Discord client"
     else
-        ferdium_action="Install Ferdium (Status: Not Installed)"
-        ferdium_description="All your services in one place"
+        armcord_action="Install armcord (Status: Not Installed)"
+        armcord_description="A custom themable Discord client"
     fi
 
     # Set the dark GTK theme
@@ -1200,11 +1200,11 @@ choice=$(zenity --list --radiolist \
                 install_zettlr
             fi
             ;;
-            "$ferdium_action")
-            if [ "$ferdium_status" == "Installed" ]; then
-                remove_ferdium
+            "$armcord_action")
+            if [ "$armcord_status" == "Installed" ]; then
+                remove_armcord
             else
-                install_ferdium
+                install_armcord
             fi
             ;;
         *)
