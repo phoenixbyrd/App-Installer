@@ -13,7 +13,7 @@ icon_path="discord"
 #Enter Categories for .desktop
 category="Network"
 #Enter any dependencies
-depends=""
+depends="libasound2"
 
 #Do not edit below here unless required
 # Process command line arguments
