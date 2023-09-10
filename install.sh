@@ -1003,7 +1003,6 @@ choice=$(zenity --list --radiolist \
     FALSE "$diablo_action" "$diablo_description" \
     FALSE "$element_action" "$element_description" \
     FALSE "$prism_action" "$prism_description" \
-    FALSE "$wine_action" "$wine_description" \
     FALSE "$runelite_action" "$runelite_description" \
     FALSE "$simplenote_action" "$simplenote_description" \
     FALSE "$onepassword_action" "$onepassword_description" \
