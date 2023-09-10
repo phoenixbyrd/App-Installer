@@ -634,6 +634,8 @@ remove_wine() {
         proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 rm /usr/local/bin/winetricks64
         proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 rm /etc/apt/sources.list.d/box64.list
         proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 rm /etc/apt/sources.list.d/box86.list
+        proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 rm /etc/apt/trusted.gpg.d/box64-debs-archive-keyring.gpg
+        proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 rm /etc/apt/trusted.gpg.d/box86-debs-archive-keyring.gpg
         rm "$HOME/Desktop/wine32.desktop"
         rm "$HOME/Desktop/wine64.desktop"
         rm "$HOME/../usr/share/applications/wine32.desktop"
