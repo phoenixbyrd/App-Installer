@@ -624,8 +624,14 @@ remove_wine() {
     if [ -e "$wine_desktop" ]; then
         proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 sudo apt remove box64-android box32-android -y
         proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 sudo apt autoremove -y
-        proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 rm -rf wine*
-        proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 rm -rf .wine*
+        proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 rm -rf wine wine64 .wine32 .wine64
+        proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 rm /usr/local/bin/box64
+        proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 rm /usr/local/bin/box86
+        proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 rm /usr/local/bin/wine
+        proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 rm /usr/local/bin/wine64
+        proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 rm /usr/local/bin/winetricks
+        proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 rm /usr/local/bin/winetricks32
+        proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 rm /usr/local/bin/winetricks64
         rm "$HOME/Desktop/wine32.desktop"
         rm "$HOME/Desktop/wine64.desktop"
         rm "$HOME/../usr/share/applications/wine32.desktop"
