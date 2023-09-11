@@ -2,7 +2,7 @@
 varname=$(basename $HOME/../usr/var/lib/proot-distro/installed-rootfs/debian/home/*)
 
 proot-distro login debian --shared-tmp -- env DISPLAY=:1.0 apt update
-proot-distro login debian --shared-tmp -- env DISPLAY=:1.0 wget https://packages.microsoft.com/repos/code/pool/main/c/code/code_1.79.0-1686148160_arm64.deb -O code.deb
+proot-distro login debian --shared-tmp -- env DISPLAY=:1.0 wget https://packages.microsoft.com/repos/code/pool/main/c/code/code_1.82.0-1694038208_arm64.deb -O code.deb
 proot-distro login debian --shared-tmp -- env DISPLAY=:1.0  sudo -S apt install ./code.deb -y
 proot-distro login debian --shared-tmp -- env DISPLAY=:1.0 rm code.deb
 proot-distro login debian --shared-tmp -- env DISPLAY=:1.0 sudo apt install gpg -y
