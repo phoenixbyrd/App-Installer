@@ -5,6 +5,12 @@ proot-distro login debian --shared-tmp -- env DISPLAY=:1.0 apt update
 proot-distro login debian --shared-tmp -- env DISPLAY=:1.0 wget https://packages.microsoft.com/repos/code/pool/main/c/code/code_1.79.0-1686148160_arm64.deb -O code.deb
 proot-distro login debian --shared-tmp -- env DISPLAY=:1.0  sudo -S apt install ./code.deb -y
 proot-distro login debian --shared-tmp -- env DISPLAY=:1.0 rm code.deb
+proot-distro login debian --shared-tmp -- env DISPLAY=:1.0 sudo apt install gpg -y
+proot-distro login debian --shared-tmp -- env DISPLAY=:1.0 wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
+proot-distro login debian --shared-tmp -- env DISPLAY=:1.0 sudo install -D -o root -g root -m 644 packages.microsoft.gpg /etc/apt/keyrings/packages.microsoft.gpg
+proot-distro login debian --shared-tmp -- env DISPLAY=:1.0 sudo sh -c 'echo "deb [arch=amd64,arm64,armhf signed-by=/etc/apt/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main" > /etc/apt/sources.list.d/vscode.list'
+proot-distro login debian --shared-tmp -- env DISPLAY=:1.0 rm packages.microsoft.gpg
+
 
 echo "[Desktop Entry]
 Version=1.0
