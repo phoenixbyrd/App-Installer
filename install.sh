@@ -629,9 +629,6 @@ remove_wine() {
         proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 rm /usr/local/bin/box86
         proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 rm /usr/local/bin/wine
         proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 rm /usr/local/bin/wine64
-        proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 rm /usr/local/bin/winetricks
-        proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 rm /usr/local/bin/winetricks32
-        proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 rm /usr/local/bin/winetricks64
         proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 rm /etc/apt/sources.list.d/box64.list
         proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 rm /etc/apt/sources.list.d/box86.list
         proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 rm /etc/apt/trusted.gpg.d/box64-debs-archive-keyring.gpg
@@ -1011,6 +1008,7 @@ choice=$(zenity --list --radiolist \
     FALSE "$vieb_action" "$vieb_description" \
     FALSE "$zettlr_action" "$zettlr_description" \
     FALSE "$armcord_action" "$armcord_description" \
+    FALSE "$wine_action" "$wine_description" \
     SEPARATOR \
     --width=900 --height=500)
 
