@@ -28,10 +28,12 @@ mv wine-8.15-x86 wine
 
 echo '#!/bin/bash 
 export WINEPREFIX=~/.wine32
+export DISPLAY=:1
 box86 '"$HOME/wine/bin/wine "'"$@"' > /usr/local/bin/wine
 chmod +x /usr/local/bin/wine
 echo '#!/bin/bash 
 export WINEPREFIX=~/.wine64
+export DISPLAY=:1
 box64 '"$HOME/wine64/bin/wine64 "'"$@"' > /usr/local/bin/wine64
 chmod +x /usr/local/bin/wine64
 
