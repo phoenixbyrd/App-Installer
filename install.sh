@@ -622,17 +622,9 @@ remove_prism() {
 
 remove_wine() {
     if [ -e "$wine_desktop" ]; then
-        proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 sudo apt remove box64-android box32-android -y
-        proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 sudo apt autoremove -y
         proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 rm -rf wine wine64 .wine32 .wine64
-        proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 rm /usr/local/bin/box64
-        proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 rm /usr/local/bin/box86
         proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 rm /usr/local/bin/wine
         proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 rm /usr/local/bin/wine64
-        proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 rm /etc/apt/sources.list.d/box64.list
-        proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 rm /etc/apt/sources.list.d/box86.list
-        proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 rm /etc/apt/trusted.gpg.d/box64-debs-archive-keyring.gpg
-        proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 rm /etc/apt/trusted.gpg.d/box86-debs-archive-keyring.gpg
         rm "$HOME/Desktop/wine32.desktop"
         rm "$HOME/Desktop/wine64.desktop"
         rm "$HOME/../usr/share/applications/wine32.desktop"
@@ -1008,6 +1000,7 @@ choice=$(zenity --list --radiolist \
     FALSE "$vieb_action" "$vieb_description" \
     FALSE "$zettlr_action" "$zettlr_description" \
     FALSE "$armcord_action" "$armcord_description" \
+    FALSE "$wine_action" "$wine_description" \
     SEPARATOR \
     --width=900 --height=500)
 
