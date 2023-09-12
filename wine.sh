@@ -18,8 +18,8 @@ sudo apt install box86-android:armhf -y
 sudo apt install nano cabextract libfreetype6 libfreetype6:armhf libfontconfig libfontconfig:armhf libxext6 libxext6:armhf libxinerama-dev libxinerama-dev:armhf libxxf86vm1 libxxf86vm1:armhf libxrender1 libxrender1:armhf libxcomposite1 libxcomposite1:armhf libxrandr2 libxrandr2:armhf libxi6 libxi6:armhf libxcursor1 libxcursor1:armhf libvulkan-dev libvulkan-dev:armhf -y
 
 cd ~/
-wget https://github.com/Kron4ek/Wine-Builds/releases/download/8.0.1/wine-8.15-amd64.tar.xz
-wget https://github.com/Kron4ek/Wine-Builds/releases/download/8.0.1/wine-8.15-x86.tar.xz
+wget https://github.com/Kron4ek/Wine-Builds/releases/download/8.15/wine-8.15-amd64.tar.xz
+wget https://github.com/Kron4ek/Wine-Builds/releases/download/8.15/wine-8.15-x86.tar.xz
 tar xvf wine-8.15-amd64.tar.xz
 tar xvf wine-8.15-x86.tar.xz
 rm wine-8.15-amd64.tar.xz wine-8.15-x86.tar.xz
