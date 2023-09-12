@@ -33,3 +33,5 @@ Terminal=false
 StartupNotify=true" > $HOME/Desktop/wine64.desktop
 chmod +x $HOME/Desktop/wine64.desktop
 cp $HOME/Desktop/wine64.desktop $HOME/../usr/share/applications
+
+rm $HOME/../usr/var/lib/proot-distro/installed-rootfs/debian/home/$varname/wine.sh
