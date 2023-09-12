@@ -18,7 +18,7 @@ Path=
 Terminal=false
 StartupNotify=true' > $HOME/Desktop/wine32.desktop
 chmod +x $HOME/Desktop/wine32.desktop
-cp $HOME/Desktop/wine32.desktop ../usr/share/applications
+cp $HOME/Desktop/wine32.desktop $HOME/../usr/share/applications
 
 echo '[Desktop Entry]
 Version=1.0
@@ -32,4 +32,4 @@ Path=
 Terminal=false
 StartupNotify=true' > $HOME/Desktop/wine64.desktop
 chmod +x $HOME/Desktop/wine64.desktop
-cp $HOME/Desktop/wine64.desktop ../usr/share/applications
+cp $HOME/Desktop/wine64.desktop $HOME/../usr/share/applications
