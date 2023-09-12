@@ -2,14 +2,6 @@
 
 #Install Box86 and Box64
 
-wget https://ryanfortner.github.io/box64-debs/box64.list -O /etc/apt/sources.list.d/box64.list
-
-wget -qO- https://ryanfortner.github.io/box64-debs/KEY.gpg | gpg --dearmor -o /etc/apt/trusted.gpg.d/box64-debs-archive-keyring.gpg
-
-wget https://ryanfortner.github.io/box86-debs/box86.list -O /etc/apt/sources.list.d/box86.list
-
-wget -qO- https://ryanfortner.github.io/box86-debs/KEY.gpg | gpg --dearmor -o /etc/apt/trusted.gpg.d/box86-debs-archive-keyring.gpg 
-
 sudo dpkg --add-architecture armhf
 
 sudo apt update -y
@@ -17,6 +9,16 @@ sudo apt update -y
 sudo apt install box64-android libc6 libc6:armhf box86-android:armhf -y
 
 sudo apt install -y cabextract libfreetype6 libfreetype6:armhf libfontconfig libfontconfig:armhf libxext6 libxext6:armhf libxinerama-dev libxinerama-dev:armhf libxxf86vm1 libxxf86vm1:armhf libxrender1 libxrender1:armhf libxcomposite1 libxcomposite1:armhf libxrandr2 libxrandr2:armhf libxi6 libxi6:armhf libxcursor1 libxcursor1:armhf libvulkan-dev libvulkan-dev:armhf libgnutls30 libgnutls30:armhf libasound2:armhf libglib2.0-0:armhf libgphoto2-6:armhf libgphoto2-port12:armhf libgstreamer-plugins-base1.0-0:armhf libgstreamer1.0-0:armhf libldap-common libldap-common:armhf libopenal1 libopenal1:armhf libpcap0.8:armhf libpulse0 libpulse0:armhf libsane1:armhf libudev1:armhf libusb-1.0-0:armhf libvkd3d1:armhf libx11-6:armhf libasound2-plugins:armhf ocl-icd-libopencl1:armhf libncurses6:armhf libncurses5:armhf libcap2-bin:armhf libcups2:armhf libdbus-1-3:armhf libfontconfig1:armhf libglu1-mesa:armhf libglu1:armhf libgssapi-krb5-2:armhf libkrb5-3:armhf libodbc1:armhf libosmesa6:armhf libsdl2-2.0-0:armhf libv4l-0:armhf libxfixes3:armhf libxinerama1:armhf
+
+sudo apt install gcc-arm-linux-gnueabihf
+
+git clone https://github.com/ptitSeb/box86
+
+cd box86; mkdir build; cd build; cmake .. -DARM64=1 -DCMAKE_BUILD_TYPE=RelWithDebInfo; make -j$(nproc); sudo make install
+
+git clone https://github.com/ptitSeb/box64
+
+cd box64; mkdir build; cd build; cmake .. -DARM64=1 -DCMAKE_BUILD_TYPE=RelWithDebInfo; make -j$(nproc); sudo make install
 
 #Install Wine
 
