@@ -26,14 +26,6 @@ rm wine-8.15-amd64.tar.xz wine-8.15-x86.tar.xz
 mv wine-8.15-amd64 wine64
 mv wine-8.15-x86 wine
 
-echo 'export DISPLAY=:0
-export BOX86_PATH=~/wine/bin/
-export BOX86_LD_LIBRARY_PATH=~/wine/lib/wine/i386-unix/:/lib/i386-linux-gnu/:/lib/aarch64-linux-gnu/:/lib/arm-linux-gnueabihf/:/usr/lib/aarch64-linux-gnu/:/usr/lib/arm-linux-gnueabihf/:/usr/lib/i386-linux-gnu/
-export BOX64_PATH=~/wine64/bin/
-export BOX64_LD_LIBRARY_PATH=~/wine64/lib/i386-unix/:~/wine64/lib/wine/x86_64-unix/:/lib/i386-linux-gnu/:/lib/x86_64-linux-gnu:/lib/aarch64-linux-gnu/:/lib/arm-linux-gnueabihf/:/usr/lib/aarch64-linux-gnu/:/usr/lib/arm-linux-gnueabihf/:/usr/lib/i386-linux-gnu/:/usr/lib/x86_64-linux-gnu' >> ~/.bashrc
-
-source ~/.bashrc
-
 echo '#!/bin/bash 
 export WINEPREFIX=~/.wine32
 box86 '"$HOME/wine/bin/wine "'"$@"' > /usr/local/bin/wine
