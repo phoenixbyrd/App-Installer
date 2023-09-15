@@ -35,6 +35,7 @@ nicotine_desktop="$HOME/../usr/share/applications/nicotine.desktop"
 vieb_desktop="$HOME/../usr/share/applications/vieb.desktop"
 zettlr_desktop="$HOME/../usr/share/applications/Zettlr.desktop"
 armcord_desktop="$HOME/../usr/share/applications/armcord.desktop"
+mari0_desktop="$HOME/../usr/share/applications/mari0.desktop"
 
 check_freetube_installed() {
     if [ -e "$freetube_desktop" ]; then
@@ -261,6 +262,14 @@ check_armcord_installed() {
     fi
 }
 
+check_mari0_installed() {
+    if [ -e "$mari0_desktop" ]; then
+        echo "Installed"
+    else
+        echo "Not Installed"
+    fi
+}
+
 install_freetube() {
     "$script_dir/install_freetube.sh"
     zenity --info --title="Installation Complete" --text="FreeTube has been installed successfully."
@@ -401,6 +410,12 @@ install_armcord() {
     "$script_dir/install_armcord.sh" --install
     zenity --info --title="Installation Complete" --text="armcord has been installed successfully."
 }
+
+install_mari0() {
+    "$script_dir/install_mari0.sh" --install
+    zenity --info --title="Installation Complete" --text="mari0 has been installed successfully."
+}
+
 
 remove_freetube() {
     if [ -e "$freetube_desktop" ]; then
@@ -709,6 +724,15 @@ remove_armcord() {
     fi
 }
 
+remove_mari0() {
+    if [ -e "$mari0_desktop" ]; then
+        "$script_dir/install_mari0.sh" --uninstall
+        zenity --info --title="Removal Complete" --text="mari0 has been removed successfully."
+    else
+        zenity --error --title="Removal Error" --text="mari0 is not installed."
+    fi
+}
+
 while true; do
     # Determine the installation status of each app
     freetube_status=$(check_freetube_installed)
@@ -739,6 +763,8 @@ while true; do
     vieb_status=$(check_vieb_installed)
     zettlr_status=$(check_zettlr_installed)
     armcord_status=$(check_armcord_installed)
+    mari0_status=$(check_mari0_installed)
+
 
     # Define the actions based on the installation status
     if [ "$freetube_status" == "Installed" ]; then
@@ -965,6 +991,14 @@ while true; do
         armcord_description="A custom themable Discord client"
     fi
 
+        if [ "$mari0_status" == "Installed" ]; then
+        mari0_action="Remove mari0 (Status: Installed)"
+        mari0_description="Mario with a portal gun"
+    else
+        mari0_action="Install mari0 (Status: Not Installed)"
+        mari0_description="Mario with a portal gun"
+    fi
+
     # Set the dark GTK theme
     export GTK_THEME=Adwaita:dark
 
@@ -1001,6 +1035,7 @@ choice=$(zenity --list --radiolist \
     FALSE "$zettlr_action" "$zettlr_description" \
     FALSE "$armcord_action" "$armcord_description" \
     FALSE "$wine_action" "$wine_description" \
+    FALSE "$mari0_action" "$mari0_description" \
     SEPARATOR \
     --width=900 --height=500)
 
@@ -1205,6 +1240,13 @@ choice=$(zenity --list --radiolist \
                 remove_armcord
             else
                 install_armcord
+            fi
+            ;;
+          "$mari0_action")
+            if [ "$mari0_status" == "Installed" ]; then
+                remove_mari0
+            else
+                install_mari0
             fi
             ;;
         *)
