@@ -9,7 +9,7 @@ url="https://github.com/phoenixbyrd/App-Installer/raw/main/FlappyBird.tar.gz"
 appname="fbird"
 #Enter path to icon or system icon name
 #/data/data/com.termux/files/usr/var/lib/proot-distro/installed-rootfs/debian
-icon_path="/data/data/com.termux/files/home/../usr/var/lib/proot-distro/installed-rootfs/debian/opt/FlappyBird/bird.png"
+icon_path="/data/data/com.termux/files/usr/var/lib/proot-distro/installed-rootfs/debian/opt/fbird/bird.png"
 #Enter Categories for .desktop
 category="Game"
 #Enter any dependencies
@@ -67,7 +67,7 @@ cat > "$desktop_file" <<EOL
 Version=1.0
 Type=Application
 Name=$appname
-Comment=
+Categories=$category
 Exec=prun $binary
 Icon=$icon_path
 Terminal=false
