@@ -38,7 +38,7 @@ if [ "$install" = true ]; then
     strip="--strip-components=1"
     extract="tar -xzf ${url##*/} -C $appname" #-xvf if tar.xz or -xzf if tar.gz 
     dir="/opt/$appname"
-    install="prun sudo apt install "
+    install="prun sudo apt install -y "
 
     varname=$(basename $HOME/../usr/var/lib/proot-distro/installed-rootfs/debian/home/*)
     prun="proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 $@"
