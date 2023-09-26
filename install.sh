@@ -36,6 +36,7 @@ vieb_desktop="$HOME/../usr/share/applications/vieb.desktop"
 zettlr_desktop="$HOME/../usr/share/applications/Zettlr.desktop"
 armcord_desktop="$HOME/../usr/share/applications/armcord.desktop"
 mari0_desktop="$HOME/../usr/share/applications/mari0.desktop"
+fbird_desktop="$HOME/../usr/share/applications/fbird.desktop"
 
 check_freetube_installed() {
     if [ -e "$freetube_desktop" ]; then
@@ -270,6 +271,14 @@ check_mari0_installed() {
     fi
 }
 
+check_fbird_installed() {
+    if [ -e "$fbird_desktop" ]; then
+        echo "Installed"
+    else
+        echo "Not Installed"
+    fi
+}
+
 install_freetube() {
     "$script_dir/install_freetube.sh"
     zenity --info --title="Installation Complete" --text="FreeTube has been installed successfully."
@@ -414,6 +423,11 @@ install_armcord() {
 install_mari0() {
     "$script_dir/install_mari0.sh" --install
     zenity --info --title="Installation Complete" --text="mari0 has been installed successfully."
+}
+
+install_fbird() {
+    "$script_dir/install_fbird.sh" --install
+    zenity --info --title="Installation Complete" --text="Flappy Bird has been installed successfully."
 }
 
 
@@ -733,6 +747,15 @@ remove_mari0() {
     fi
 }
 
+remove_fbird() {
+    if [ -e "$fbird_desktop" ]; then
+        "$script_dir/install_fbird.sh" --uninstall
+        zenity --info --title="Removal Complete" --text="Flappy Bird has been removed successfully."
+    else
+        zenity --error --title="Removal Error" --text="Flappy Bird is not installed."
+    fi
+}
+
 while true; do
     # Determine the installation status of each app
     freetube_status=$(check_freetube_installed)
@@ -764,7 +787,7 @@ while true; do
     zettlr_status=$(check_zettlr_installed)
     armcord_status=$(check_armcord_installed)
     mari0_status=$(check_mari0_installed)
-
+    fbird_status=$(check_fbird_installed)
 
     # Define the actions based on the installation status
     if [ "$freetube_status" == "Installed" ]; then
@@ -991,12 +1014,20 @@ while true; do
         armcord_description="A custom themable Discord client"
     fi
 
-        if [ "$mari0_status" == "Installed" ]; then
+    if [ "$mari0_status" == "Installed" ]; then
         mari0_action="Remove mari0 (Status: Installed)"
         mari0_description="Mario with a portal gun"
     else
         mari0_action="Install mari0 (Status: Not Installed)"
         mari0_description="Mario with a portal gun"
+    fi
+
+    if [ "$fbird_status" == "Installed" ]; then
+        fbird_action="Remove Flappy Bird (Status: Installed)"
+        fbird_description="QB64 Clone of Flappy Bird"
+    else
+        fbird_action="Install Flappy Bird (Status: Not Installed)"
+        fbird_description="QB64 Clone of Flappy Bird"
     fi
 
     # Set the dark GTK theme
@@ -1036,6 +1067,7 @@ choice=$(zenity --list --radiolist \
     FALSE "$armcord_action" "$armcord_description" \
     FALSE "$wine_action" "$wine_description" \
     FALSE "$mari0_action" "$mari0_description" \
+    FALSE "$fbird_action" "$fbird_description" \
     SEPARATOR \
     --width=900 --height=500)
 
@@ -1228,25 +1260,32 @@ choice=$(zenity --list --radiolist \
                 install_vieb
             fi
             ;;
-            "$zettlr_action")
+        "$zettlr_action")
             if [ "$zettlr_status" == "Installed" ]; then
                 remove_zettlr
             else
                 install_zettlr
             fi
             ;;
-            "$armcord_action")
+        "$armcord_action")
             if [ "$armcord_status" == "Installed" ]; then
                 remove_armcord
             else
                 install_armcord
             fi
             ;;
-          "$mari0_action")
+        "$mari0_action")
             if [ "$mari0_status" == "Installed" ]; then
                 remove_mari0
             else
                 install_mari0
+            fi
+            ;;
+        "$fbird_action")
+            if [ "$fbird_status" == "Installed" ]; then
+                remove_fbird
+            else
+                install_fbird
             fi
             ;;
         *)
