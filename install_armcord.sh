@@ -4,7 +4,7 @@
 
 # Default values to edit
 #Enter URL to appimage
-url="https://github.com/ArmCord/ArmCord/releases/download/v3.2.4/ArmCord_3.2.4_arm64.deb"
+url="https://github.com/ArmCord/ArmCord/releases/download/v3.2.6/ArmCord_3.2.6_arm64.deb"
 #Enter name of app
 appname="armcord"
 #Enter path to icon or system icon name
