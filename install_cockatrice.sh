@@ -11,7 +11,7 @@ appname="cockatrice"
 #/data/data/com.termux/files/usr/var/lib/proot-distro/installed-rootfs/debian
 icon_path="cockatrice"
 #Enter Categories for .desktop
-category="Games"
+category="Game;"
 #Enter any dependencies
 depends=""
 
