@@ -1102,7 +1102,7 @@ choice=$(zenity --list --radiolist \
     FALSE "$fbird_action" "$fbird_description" \
     FALSE "$gdlauncher_action" "$gdlauncher_description" \    
     SEPARATOR \
-    --width=900 --height=600)
+    --width=900 --height=500)
 
     # Check if the user canceled the selection
     if [ -z "$choice" ]; then
