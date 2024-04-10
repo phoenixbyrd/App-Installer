@@ -1054,7 +1054,7 @@ while true; do
         fbird_description="QB64 Clone of Flappy Bird"
     fi
 
-    if [ "$armcord_status" == "Installed" ]; then
+    if [ "$gdlauncher_status" == "Installed" ]; then
         gdlauncher_action="Remove GDLauncher (Status: Installed)"
         gdlauncher_description="A Minecraft launcher"
     else
