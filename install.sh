@@ -38,6 +38,7 @@ armcord_desktop="$HOME/../usr/share/applications/armcord.desktop"
 mari0_desktop="$HOME/../usr/share/applications/mari0.desktop"
 fbird_desktop="$HOME/../usr/share/applications/fbird.desktop"
 gdlauncher_desktop="$HOME/../usr/share/applications/gdlauncher.desktop"
+cockatrice_desktop="$HOME/../usr/share/applications/cockatrice.desktop"
 
 check_freetube_installed() {
     if [ -e "$freetube_desktop" ]; then
@@ -288,6 +289,14 @@ check_gdlauncher_installed() {
     fi
 }
 
+check_cockatrice_installed() {
+    if [ -e "$cockatrice_desktop" ]; then
+        echo "Installed"
+    else
+        echo "Not Installed"
+    fi
+}
+
 install_freetube() {
     "$script_dir/install_freetube.sh"
     zenity --info --title="Installation Complete" --text="FreeTube has been installed successfully."
@@ -442,6 +451,11 @@ install_fbird() {
 install_gdlauncher() {
     "$script_dir/install_gdlauncher.sh" --install
     zenity --info --title="Installation Complete" --text="GDLauncher has been installed successfully."
+}
+
+install_cockatrice() {
+    "$script_dir/install_cockatrice.sh" --install
+    zenity --info --title="Installation Complete" --text="Cockatrice has been installed successfully."
 }
 
 
@@ -780,6 +794,15 @@ remove_gdlauncher() {
     fi
 }
 
+remove_cockatrice() {
+    if [ -e "$cockatrice_desktop" ]; then
+        "$script_dir/install_cockatrice.sh" --uninstall
+        zenity --info --title="Removal Complete" --text="Cockatrice has been removed successfully."
+    else
+        zenity --error --title="Removal Error" --text="Cockatrice is not installed."
+    fi
+}
+
 while true; do
     # Determine the installation status of each app
     freetube_status=$(check_freetube_installed)
@@ -813,6 +836,7 @@ while true; do
     mari0_status=$(check_mari0_installed)
     fbird_status=$(check_fbird_installed)
     gdlauncher_status=$(check_gdlauncher_installed)
+    cockatrice_status=$(check_cockatrice_installed)
 
     # Define the actions based on the installation status
     if [ "$freetube_status" == "Installed" ]; then
@@ -1063,6 +1087,14 @@ while true; do
         gdlauncher_description="A Minecraft launcher"
     fi    
 
+    if [ "$cockatrice_status" == "Installed" ]; then
+        cockatrice_action="Remove Cockatrice (Status: Installed)"
+        cockatrice_description="A cross-platform virtual tabletop for multiplayer card games"
+    else
+        cockatrice_action="Install Cockatrice (Status: Not Installed)"
+        cockatrice_description="A cross-platform virtual tabletop for multiplayer card games"
+    fi   
+    
     # Set the dark GTK theme
     export GTK_THEME=Adwaita:dark
 
@@ -1102,6 +1134,7 @@ choice=$(zenity --list --radiolist \
     FALSE "$mari0_action" "$mari0_description" \
     FALSE "$fbird_action" "$fbird_description" \
     FALSE "$gdlauncher_action" "$gdlauncher_description" \
+    FALSE "$cockatrice_action" "$cockatrice_description" \
     SEPARATOR \
     --width=900 --height=500)
 
@@ -1328,7 +1361,14 @@ choice=$(zenity --list --radiolist \
             else
                 install_gdlauncher
             fi
-            ;;            
+            ;;       
+        "$cockatrice_action")
+            if [ "$cockatrice_status" == "Installed" ]; then
+                remove_cockatrice
+            else
+                install_cockatrice
+            fi
+            ;;               
         *)
             zenity --error --title="Error" --text="Invalid choice."
             ;;
