@@ -11,7 +11,7 @@ appname="gdlauncher"
 #/data/data/com.termux/files/usr/var/lib/proot-distro/installed-rootfs/debian
 icon_path="gdlauncher"
 #Enter Categories for .desktop
-category="Games;"
+category="Game;"
 #Enter any dependencies
 depends="mesa-utils"
 
