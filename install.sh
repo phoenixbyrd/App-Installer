@@ -1100,6 +1100,7 @@ choice=$(zenity --list --radiolist \
     FALSE "$wine_action" "$wine_description" \
     FALSE "$mari0_action" "$mari0_description" \
     FALSE "$fbird_action" "$fbird_description" \
+    FALSE "$gdlauncher_action" "$gdlauncher_description" \
     SEPARATOR \
     --width=900 --height=500)
 
