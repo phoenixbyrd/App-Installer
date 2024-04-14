@@ -2,9 +2,9 @@
 varname=$(basename $HOME/../usr/var/lib/proot-distro/installed-rootfs/debian/home/*)
 
 proot-distro login --user $varname debian --shared-tmp -- env DISPLAY=:1.0 apt update
-proot-distro login --user $varname debian --shared-tmp -- env DISPLAY=:1.0 wget https://github.com/SpacingBat3/WebCord/releases/download/v4.2.0/webcord_4.2.0_arm64.deb
-proot-distro login --user $varname debian --shared-tmp -- env DISPLAY=:1.0 sudo -S apt install ./webcord_4.2.0_arm64.deb -y
-proot-distro login --user $varname debian --shared-tmp -- env DISPLAY=:1.0 rm webcord_4.2.0_arm64.deb
+proot-distro login --user $varname debian --shared-tmp -- env DISPLAY=:1.0 wget https://github.com/SpacingBat3/WebCord/releases/download/v4.8.0/webcord_4.8.0_arm64.deb
+proot-distro login --user $varname debian --shared-tmp -- env DISPLAY=:1.0 sudo -S apt install ./webcord_4.8.0_arm64.deb -y
+proot-distro login --user $varname debian --shared-tmp -- env DISPLAY=:1.0 rm webcord_4.8.0_arm64.deb
 
 echo "[Desktop Entry]
 Name=Discord
