@@ -1,18 +1,19 @@
 #!/bin/bash
 
-#This script installs aarch64 appimages into debian proot /opt directory and creates a desktop and menu launcher
+#This script installs aarch64 .tar.xz or .tar.gz into debian proot /opt directory and creates a desktop and menu launcher
 
 # Default values to edit
 #Enter URL to appimage
-url="https://github.com/rustdesk/rustdesk/releases/download/1.2.3-2/rustdesk-1.2.3-2-aarch64.AppImage"
+url="https://github.com/rustdesk/rustdesk/releases/download/1.2.3-2/rustdesk-1.2.3-2-aarch64.deb"
 #Enter name of app
 appname="rustdesk"
 #Enter path to icon or system icon name
+#/data/data/com.termux/files/usr/var/lib/proot-distro/installed-rootfs/debian
 icon_path="rustdesk"
 #Enter Categories for .desktop
-category="Network"
+category="Network;"
 #Enter any dependencies
-depends="zlib1g-dev"
+depends=""
 
 #Do not edit below here unless required
 # Process command line arguments
@@ -35,26 +36,22 @@ done
 
 if [ "$install" = true ]; then
     download="wget $url"
-    extract="${url##*/} --appimage-extract"
-    dir="/opt/$appname"
     install="prun sudo apt install -y "
 
     varname=$(basename $HOME/../usr/var/lib/proot-distro/installed-rootfs/debian/home/*)
     prun="proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 $@"
 
-    $install $depends
     $prun $download
-    $prun chmod +x ${url##*/}
-    $prun ./$extract
+    $install $depends
+    $install ./${url##*/}
     $prun rm ${url##*/}
-    $prun mv squashfs-root $dir
 
     installed_dir="$HOME/../usr/var/lib/proot-distro/installed-rootfs/debian/$dir"
     desktop_file="$HOME/Desktop/$appname.desktop"
     binary=$(find "$installed_dir" -type f -executable -print -quit)
 
     #If binary is different, specify it here after $installed_dir/ and use $alt_binary instead of $binary
-    alt_binary="$installed_dir/AppRun"
+    alt_binary="$installed_dir/"
 
     #If binary is sandboxed use $sandboxed at end of Exec command
     sandboxed="--no-sandbox"
@@ -65,8 +62,8 @@ cat > "$desktop_file" <<EOL
 Version=1.0
 Type=Application
 Name=$appname
-Comment=Web Browser
-Exec=prun $alt_binary $sandboxed
+Comment=$appname
+Exec=prun /usr/lib/rustdesk/rustdesk
 Icon=$icon_path
 Categories=$category
 Terminal=false
@@ -78,9 +75,8 @@ echo "Installation completed."
 
 elif [ "$uninstall" = true ]; then
     echo "Uninstalling..."
-    dir="/opt/$appname"
-    installed_dir="$HOME/../usr/var/lib/proot-distro/installed-rootfs/debian/$dir"
-    rm -rf "$installed_dir"
+    uninstall="prun sudo apt remove"
+    $uninstall $appname -y
     desktop_file="$HOME/Desktop/$appname.desktop"
     rm "$desktop_file"
     rm "$HOME/../usr/share/applications/$appname.desktop"
