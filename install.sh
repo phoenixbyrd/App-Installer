@@ -40,7 +40,7 @@ fbird_desktop="$HOME/../usr/share/applications/fbird.desktop"
 gdlauncher_desktop="$HOME/../usr/share/applications/gdlauncher.desktop"
 cockatrice_desktop="$HOME/../usr/share/applications/cockatrice.desktop"
 rustdesk_desktop="$HOME/../usr/share/applications/rustdesk.desktop"
-thhorium_desktop="$HOME/../usr/share/applications/thorium-browser.desktop"
+thorium_desktop="$HOME/../usr/share/applications/thorium-browser.desktop"
 
 check_freetube_installed() {
     if [ -e "$freetube_desktop" ]; then
