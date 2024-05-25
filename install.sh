@@ -40,6 +40,7 @@ fbird_desktop="$HOME/../usr/share/applications/fbird.desktop"
 gdlauncher_desktop="$HOME/../usr/share/applications/gdlauncher.desktop"
 cockatrice_desktop="$HOME/../usr/share/applications/cockatrice.desktop"
 rustdesk_desktop="$HOME/../usr/share/applications/rustdesk.desktop"
+thhorium_desktop="$HOME/../usr/share/applications/thorium-browser.desktop"
 
 check_freetube_installed() {
     if [ -e "$freetube_desktop" ]; then
@@ -306,6 +307,14 @@ check_rustdesk_installed() {
     fi
 }
 
+check_thorium_installed() {
+    if [ -e "$thorium_desktop" ]; then
+        echo "Installed"
+    else
+        echo "Not Installed"
+    fi
+}
+
 install_freetube() {
     "$script_dir/install_freetube.sh"
     zenity --info --title="Installation Complete" --text="FreeTube has been installed successfully."
@@ -470,6 +479,11 @@ install_cockatrice() {
 install_rustdesk() {
     "$script_dir/install_rustdesk.sh" --install
     zenity --info --title="Installation Complete" --text="Rustdesk has been installed successfully."
+}
+
+install_thorium() {
+    "$script_dir/install_thorium.sh" --install
+    zenity --info --title="Installation Complete" --text="Thorium has been installed successfully."
 }
 
 
@@ -826,6 +840,15 @@ remove_rustdesk() {
     fi
 }
 
+remove_thorium() {
+    if [ -e "$thorium_desktop" ]; then
+        "$script_dir/install_thorium.sh" --uninstall
+        zenity --info --title="Removal Complete" --text="Throium has been removed successfully."
+    else
+        zenity --error --title="Removal Error" --text="Thorium is not installed."
+    fi
+}
+
 while true; do
     # Determine the installation status of each app
     freetube_status=$(check_freetube_installed)
@@ -861,6 +884,7 @@ while true; do
     gdlauncher_status=$(check_gdlauncher_installed)
     cockatrice_status=$(check_cockatrice_installed)
     rustdesk_status=$(check_rustdesk_installed)
+    thorium_status=$(check_thorium_installed)
 
     # Define the actions based on the installation status
     if [ "$freetube_status" == "Installed" ]; then
@@ -1125,7 +1149,15 @@ while true; do
     else
         rustdesk_action="Install Rustdesk (Status: Not Installed)"
         rustdesk_description="An alternative to TeamViewer"
-    fi       
+    fi      
+    
+    if [ "$thorium_status" == "Installed" ]; then
+        thorium_action="Remove Thorium (Status: Installed)"
+        thorium_description="The fastest browser on Earth"
+    else
+        thorium_action="Install Thorium (Status: Not Installed)"
+        thorium_description="The fastest browser on Earth"
+    fi         
     
     # Set the dark GTK theme
     export GTK_THEME=Adwaita:dark
@@ -1168,6 +1200,7 @@ choice=$(zenity --list --radiolist \
     FALSE "$gdlauncher_action" "$gdlauncher_description" \
     FALSE "$cockatrice_action" "$cockatrice_description" \
     FALSE "$rustdesk_action" "$rustdesk_description" \
+    FALSE "$thorium_action" "$thorium_description" \
     SEPARATOR \
     --width=900 --height=500)
 
@@ -1409,6 +1442,13 @@ choice=$(zenity --list --radiolist \
                 install_rustdesk
             fi
             ;;  
+        "$thorium_action")
+            if [ "$thorium_status" == "Installed" ]; then
+                remove_thorium
+            else
+                install_thorium
+            fi
+            ;;              
         *)
             zenity --error --title="Error" --text="Invalid choice."
             ;;
