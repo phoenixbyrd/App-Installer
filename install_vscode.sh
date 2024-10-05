@@ -1,8 +1,9 @@
 #!/bin/bash
 varname=$(basename $HOME/../usr/var/lib/proot-distro/installed-rootfs/debian/home/*)
+package="https://packages.microsoft.com/repos/code/pool/main/c/code/code_1.94.0-1727877189_arm64.deb"
 
 proot-distro login debian --shared-tmp -- env DISPLAY=:1.0 apt update
-proot-distro login debian --shared-tmp -- env DISPLAY=:1.0 wget https://packages.microsoft.com/repos/code/pool/main/c/code/code_1.82.0-1694038208_arm64.deb -O code.deb
+proot-distro login debian --shared-tmp -- env DISPLAY=:1.0 wget $package -O code.deb
 proot-distro login debian --shared-tmp -- env DISPLAY=:1.0 sudo -S apt install ./code.deb -y
 proot-distro login debian --shared-tmp -- env DISPLAY=:1.0 rm code.deb
 proot-distro login debian --shared-tmp -- env DISPLAY=:1.0 sudo -S apt install gpg software-properties-common apt-transport-https -y
