@@ -18,6 +18,7 @@ code_desktop="$HOME/../usr/share/applications/code.desktop"
 vlc_desktop="$HOME/../usr/share/applications/vlc.desktop"
 notion_desktop="$HOME/../usr/share/applications/notion.desktop"
 pycharm_desktop="$HOME/../usr/share/applications/pycharm.desktop"
+netbeans_desktop="$HOME/../usr/share/applications/netbeans.desktop"
 remarkable_desktop="$HOME/../usr/share/applications/remarkable.desktop"
 shatteredpd_desktop="$HOME/../usr/share/applications/shatteredpd.desktop"
 el_desktop="$HOME/../usr/share/applications/el.desktop"
@@ -124,6 +125,14 @@ check_notion_installed() {
 
 check_pycharm_installed() {
     if [ -e "$pycharm_desktop" ]; then
+        echo "Installed"
+    else
+        echo "Not Installed"
+    fi
+}
+
+check_netbeans_installed() {
+    if [ -e "$netbeans_desktop" ]; then
         echo "Installed"
     else
         echo "Not Installed"
@@ -370,6 +379,11 @@ install_pycharm() {
     zenity --info --title="Installation Complete" --text="PyCharm has been installed successfully."
 }
 
+install_netbeans() {
+    "$script_dir/install_netbeans.sh"
+    zenity --info --title="Installation Complete" --text="Apache Netbeans has been installed successfully."
+}
+
 install_remarkable() {
     "$script_dir/install_remarkable.sh"
     zenity --info --title="Installation Complete" --text="Remarkable has been installed successfully."
@@ -414,7 +428,6 @@ install_wine() {
     "$script_dir/install_wine.sh"
     zenity --info --title="Installation Complete" --text="Box86, Box64 and Wine has been installed successfully."
 }
-
 
 install_runelite() {
     "$script_dir/install_runelite.sh"
@@ -612,6 +625,17 @@ remove_pycharm() {
         zenity --info --title="Removal Complete" --text="PyCharm has been removed successfully."
     else
         zenity --error --title="Removal Error" --text="PyCharm is not installed."
+    fi
+}
+
+remove_netbeans() {
+    if [ -e "$netbeans_desktop" ]; then
+        proot-distro login debian --user $varname --shared-tmp -- env DISPLAY=:1.0 rm -rf /usr/lib/apache-netbeans
+        rm "$HOME/Desktop/netbeans.desktop"
+        rm "$netbeans_desktop"
+        zenity --info --title="Removal Complete" --text="Apache Netbeans has been removed successfully."
+    else
+        zenity --error --title="Removal Error" --text="Apache Netbeans is not installed."
     fi
 }
 
@@ -862,6 +886,7 @@ while true; do
     vlc_status=$(check_vlc_installed)
     notion_status=$(check_notion_installed)
     pycharm_status=$(check_pycharm_installed)
+    netbeans_status=$(check_netbeans_installed)
     remarkable_status=$(check_remarkable_installed)
     shatteredpd_status=$(check_shatteredpd_installed)
     el_status=$(check_el_installed)
@@ -973,6 +998,14 @@ while true; do
     else
         pycharm_action="Install PyCharm (Status: Not Installed)"
         pycharm_description="A Python IDE"
+    fi
+
+    if [ "$netbeans_status" == "Installed" ]; then
+        netbeans_action="Remove Apache Netbeans (Status: Installed)"
+        netbeans_description="A Java IDE"
+    else
+        netbeans_action="Install Apache Netbeans (Status: Not Installed)"
+        netbeans_description="A Java IDE"
     fi
     
     if [ "$remarkable_status" == "Installed" ]; then
@@ -1178,6 +1211,7 @@ choice=$(zenity --list --radiolist \
     FALSE "$vlc_action" "$vlc_description" \
     FALSE "$notion_action" "$notion_description" \
     FALSE "$pycharm_action" "$pycharm_description" \
+    FALSE "$netbeans_action" "$netbeans_descriptio" \
     FALSE "$remarkable_action" "$remarkable_description" \
     FALSE "$shatteredpd_action" "$shatteredpd_description" \
     FALSE "$el_action" "$el_description" \
@@ -1287,7 +1321,14 @@ choice=$(zenity --list --radiolist \
             else
                 install_pycharm
             fi
-            ;;   
+            ;;
+        "$netbeans_action")
+            if [ "$netbeans_status" == "Installed" ]; then
+                remove_netbeans
+            else
+                install_netbeans
+            fi
+            ;;
         "$remarkable_action")
             if [ "$remarkable_status" == "Installed" ]; then
                 remove_remarkable
