@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cd $HOME/.config/appinstaller
+cd $HOME/.config/App-Installer
 git reset --hard HEAD
 git pull
 chmod +x *
