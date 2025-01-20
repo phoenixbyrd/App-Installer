@@ -4,4 +4,4 @@ cd $HOME/.config/appinstaller
 git reset --hard HEAD
 git pull
 chmod +x *
-./app-installer
+./appinstaller.sh
