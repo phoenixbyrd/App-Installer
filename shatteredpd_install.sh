@@ -13,7 +13,7 @@ declare -A APP_CONFIG=(
     [dependencies]="openjdk-17-jre libopenal1 zlib1g-dev"
     [extra_flags]=""
     [custom_binary]="java -jar /opt/shatteredpd/ShatteredPD.jar"
-    [description]="test"
+    [description]="A traditional roguelike dungeon crawler RPG"
 )
 
 # System Paths
