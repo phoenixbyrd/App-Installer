@@ -5,7 +5,7 @@ declare -A APP_CONFIG=(
 	[url]="http://sldev.free.fr/binaries/CoolVLViewer-arm64-1.32.2.31.tar.bz2"
 	[name]="CoolVLViewer"
 	[icon]="/opt/coolvlviewer/secondlife_icon.png"
-	[category]="Graphics"
+	[category]="Game;"
 	[dependencies]="libgl1 libglu1-mesa libx11-6 libxext6 libxrender1 libssl3"
 	[description]="CoolVLViewer is a lightweight and feature-rich Second Life viewer."
 )
