@@ -6,7 +6,7 @@
 
 # Application Details
 declare -A APP_CONFIG=(
-    [url]="https://packages.microsoft.com/repos/code/pool/main/c/code/code_1.82.0-1694038208_arm64.deb"
+    [url]="https://packages.microsoft.com/repos/code/pool/main/c/code/code_1.96.4-1736994636_arm64.deb"
     [name]="code"
     [icon]="vscode"
     [category]="Development;"
