@@ -2,7 +2,7 @@
 
 # Configuration
 declare -A APP_CONFIG=(
-	[url]="http://sldev.free.fr/binaries/CoolVLViewer-arm64-1.32.2.31.tar.bz2"
+	[url]="http://sldev.free.fr/binaries/CoolVLViewer-arm64-1.32.2.35.tar.bz2"
 	[name]="CoolVLViewer"
 	[icon]="/opt/coolvlviewer/secondlife_icon.png"
 	[category]="Game;"
